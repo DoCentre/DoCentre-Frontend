@@ -64,7 +64,7 @@ export default {
 
                 if (this.$store.state.login.isLogin) {
                     this.loginSuccess = true;
-                    this.$router.push("/filelist");
+                    this.$router.push("/edit");
                 } else {
                     this.loginFailed = true;
                 }

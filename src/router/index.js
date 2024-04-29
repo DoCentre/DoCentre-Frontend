@@ -14,15 +14,23 @@ const routes = [
     name: "SignUp",
     component: () => import("../views/SignUp.vue"),
     meta: {
-      title: "SignUp",
+      title: "Sign Up",
     },
   },
   {
-    path: "/filelist",
-    name: "FileList",
-    component: () => import("../views/FileList.vue"),
+    path: "/edit",
+    name: "EditFileList",
+    component: () => import("../views/EditDoc.vue"),
     meta: {
-      title: "FileList",
+      title: "Edit Document",
+    },
+  },
+  {
+    path: "/approve",
+    name: "ApproveFileList",
+    component: () => import("../views/ApproveDoc.vue"),
+    meta: {
+      title: "Approve Document",
     },
   },
 ];

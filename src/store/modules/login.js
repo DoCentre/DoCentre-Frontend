@@ -27,7 +27,7 @@ const getters = {};
 const actions = {
   async loginUser({ commit }, loginData) {
     const userData = await loginUser(loginData.username, loginData.password);
-    console.log(userData.user);
+
     if (userData !== null) {
       sessionStorage.setItem("id", userData.user.id);
       sessionStorage.setItem("username", userData.user.username);
