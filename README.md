@@ -1,4 +1,5 @@
-# docentre-frontend
+# Docentre-Frontend
+
 
 ## Project setup
 ```

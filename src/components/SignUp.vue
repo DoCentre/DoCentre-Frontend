@@ -5,7 +5,7 @@
         </v-card-title>
 
         <v-card-text>
-            <v-form ref="form" v-model="valid" lazy-validation>
+            <v-form ref="form" v-model="valid" lazy-validation @keyup.enter="signUp">
                 <v-text-field v-model="email" :rules="emailRules" label="信箱" type="email" required></v-text-field>
                 <v-text-field v-model="username" :rules="usernameRules" label="使用者名稱" required></v-text-field>
                 <v-text-field v-model="password" :rules="passwordRules" label="密碼" type="password"
@@ -57,16 +57,20 @@ export default {
     },
     methods: {
         async signUp() {
-            const result = await createUser(
-                this.username,
-                this.password,
-                this.email
-            );
+            if (this.valid) {
+                const result = await createUser(
+                    this.username,
+                    this.password,
+                    this.email
+                );
 
-            if (result == null) {
-                this.isOpenSnackbar = true;
+                if (result == null) {
+                    this.isOpenSnackbar = true;
+                } else {
+                    this.$router.push("/");
+                }
             } else {
-                this.$router.push("/");
+                this.isOpenSnackbar = true;
             }
         },
         backToLogin() {

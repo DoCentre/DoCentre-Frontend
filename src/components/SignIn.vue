@@ -17,8 +17,6 @@
         </v-card-actions>
     </v-card>
 
-    <!-- <GoogleLogin :callback="callback" prompt /> -->
-
 
     <v-snackbar v-model="loginSuccess" :timeout="2000" color="green">
         登入成功
@@ -30,12 +28,8 @@
 </template>
 
 <script>
-// import GoogleLogin from "@/components/GoogleLogin.vue";
 export default {
     name: "SignIn",
-    components: {
-        // GoogleLogin,
-    },
     data: () => {
         return {
             loginSuccess: false,
@@ -62,7 +56,7 @@ export default {
         async signIn() {
             if (this.valid) {
                 this.$store.dispatch("login/logoutUser")
-                this.$store.state.login.isLogin = false
+                this.$store.state.login.isLogin = false;
                 await this.$store.dispatch("login/loginUser", {
                     username: this.username,
                     password: this.password,
@@ -70,9 +64,12 @@ export default {
 
                 if (this.$store.state.login.isLogin) {
                     this.loginSuccess = true;
+                    this.$router.push("/filelist");
                 } else {
                     this.loginFailed = true;
                 }
+            } else {
+                this.loginFailed = true;
             }
         },
         signUp() {

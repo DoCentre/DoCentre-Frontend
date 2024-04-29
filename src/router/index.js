@@ -18,11 +18,11 @@ const routes = [
     },
   },
   {
-    path: "/login",
-    name: "LoginSuccess",
-    component: () => import("../views/LoginSuccess.vue"),
+    path: "/filelist",
+    name: "FileList",
+    component: () => import("../views/FileList.vue"),
     meta: {
-      title: "LoginSuccess",
+      title: "FileList",
     },
   },
 ];

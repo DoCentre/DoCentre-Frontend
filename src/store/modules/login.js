@@ -27,13 +27,13 @@ const getters = {};
 const actions = {
   async loginUser({ commit }, loginData) {
     const userData = await loginUser(loginData.username, loginData.password);
-
+    console.log(userData.user);
     if (userData !== null) {
-      sessionStorage.setItem("id", userData.id);
-      sessionStorage.setItem("username", userData.username);
-      sessionStorage.setItem("identity", userData.identity);
-      sessionStorage.setItem("email", userData.email);
-      commit("updateUserData", userData);
+      sessionStorage.setItem("id", userData.user.id);
+      sessionStorage.setItem("username", userData.user.username);
+      sessionStorage.setItem("identity", userData.user.identity);
+      sessionStorage.setItem("email", userData.user.email);
+      commit("updateUserData", userData.user);
     }
   },
   logoutUser({ commit }) {
