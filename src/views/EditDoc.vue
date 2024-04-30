@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { createDoc } from "@/api/docApi";
 import NavigationBar from "@/components/NavigationBar.vue";
 export default {
     name: "FileList",
@@ -48,10 +49,10 @@ export default {
             this.snackbarContent = "Card " + id + " is clicked";
             this.clickCard = true;
         },
-        appendDoc() {
-            const id = this.docs.length + 1;
+        async appendDoc() {
+            const result = await createDoc(this.$store.state.login.id);
+            const id = result["document_id"];
             this.docs.push({ id: id, title: "Card " + id, subtitle: "This is a card " + id + " subtitle", content: "This is card " + id + " content", status: "green" });
-
         },
     },
 };
