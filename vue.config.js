@@ -12,6 +12,13 @@ module.exports = {
           "^/api": "",
         },
       },
+      "/oauth": {
+        target: "http://localhost:5273",
+        changeOrigin: true,
+        pathRewrite: {
+          "^/oauth": "",
+        },
+      },
     },
   },
 

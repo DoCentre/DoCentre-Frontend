@@ -17,6 +17,7 @@
         </v-card-actions>
     </v-card>
 
+    <GoogleLogin :callback="callback" popup-type="TOKEN"></GoogleLogin>
 
     <v-snackbar v-model="loginSuccess" :timeout="2000" color="green">
         登入成功
@@ -28,8 +29,12 @@
 </template>
 
 <script>
+import GoogleLogin from "@/components/GoogleLogin.vue";
 export default {
     name: "SignIn",
+    components: {
+        GoogleLogin,
+    },
     data: () => {
         return {
             loginSuccess: false,
