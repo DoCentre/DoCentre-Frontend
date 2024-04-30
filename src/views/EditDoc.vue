@@ -2,55 +2,31 @@
     <NavigationBar />
     <v-container>
         <v-row>
-            <v-col cols="12" md="4">
-                <v-card class="mx-auto" subtitle="This is a card subtitle" title="This is a title" hover height="200px">
-                    <template v-slot:append>
-                        <v-avatar size="24">
-                            <v-img color="red"></v-img>
-                        </v-avatar>
-                    </template>
-                    <v-card-text>This is card content</v-card-text>
-                </v-card>
-            </v-col>
-            <v-col cols="12" md="4">
-                <v-card class="mx-auto" subtitle="This is a card subtitle" title="This is a title" hover height="200px">
-                    <template v-slot:append>
-                        <v-avatar size="24">
-                            <v-img color="yellow"></v-img>
-                        </v-avatar>
-                    </template>
-                    <v-card-text>This is card content</v-card-text>
-                </v-card>
-            </v-col>
-            <v-col cols="12" md="4">
-                <v-card class="mx-auto" subtitle="This is a card subtitle" title="This is a title" hover height="200px">
-                    <template v-slot:append>
-                        <v-avatar size="24">
-                            <v-img color="green"></v-img>
-                        </v-avatar>
-                    </template>
-                    <v-card-text>This is card content</v-card-text>
-                </v-card>
-            </v-col>
-            <v-col cols="12" md="4">
-                <v-card class="mx-auto" subtitle="This is a card subtitle" title="This is a title" hover height="200px">
-                    <template v-slot:append>
-                        <v-avatar size="24">
-                            <v-img color="green"></v-img>
-                        </v-avatar>
-                    </template>
-                    <v-card-text>This is card content</v-card-text>
-                </v-card>
-            </v-col>
-            <v-col cols="12" md="4">
-                <v-card hover height="200px" align="center">
+            <v-col cols="12">
+                <v-card hover height="200px" align="center" @click="appendDoc">
                     <v-avatar size="200">
                         <v-icon color="blue" size="100">mdi-plus</v-icon>
                     </v-avatar>
                 </v-card>
             </v-col>
+            <v-layout row wrap v-for="(doc) in docs" :key="doc.id">
+                <v-col>
+                    <v-card class="mx-auto" :subtitle="doc.subtitle" :title="doc.title" hover height="200px"
+                        @click="check(doc.id)">
+                        <template v-slot:append>
+                            <v-avatar size="24">
+                                <v-img :color="doc.status"></v-img>
+                            </v-avatar>
+                        </template>
+                        <v-card-text>{{ doc.content }}</v-card-text>
+                    </v-card>
+                </v-col>
+            </v-layout>
         </v-row>
     </v-container>
+    <v-snackbar v-model="clickCard" :timeout="2000" color="green">
+        {{ snackbarContent }}
+    </v-snackbar>
 </template>
 
 <script>
@@ -59,6 +35,24 @@ export default {
     name: "FileList",
     components: {
         NavigationBar,
+    },
+    data() {
+        return {
+            snackbarContent: "",
+            clickCard: false,
+            docs: [],
+        };
+    },
+    methods: {
+        check(id) {
+            this.snackbarContent = "Card " + id + " is clicked";
+            this.clickCard = true;
+        },
+        appendDoc() {
+            const id = this.docs.length + 1;
+            this.docs.push({ id: id, title: "Card " + id, subtitle: "This is a card " + id + " subtitle", content: "This is card " + id + " content", status: "green" });
+
+        },
     },
 };
 </script>

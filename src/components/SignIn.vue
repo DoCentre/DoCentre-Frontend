@@ -61,7 +61,7 @@ export default {
                     username: this.username,
                     password: this.password,
                 });
-
+                console.log(this.$store.state.login);
                 if (this.$store.state.login.isLogin) {
                     this.loginSuccess = true;
                     this.$router.push("/edit");
