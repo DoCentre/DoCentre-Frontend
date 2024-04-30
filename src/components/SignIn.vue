@@ -17,7 +17,7 @@
         </v-card-actions>
     </v-card>
 
-    <GoogleLogin :callback="callback" popup-type="TOKEN"></GoogleLogin>
+    <GoogleLogin />
 
     <v-snackbar v-model="loginSuccess" :timeout="2000" color="green">
         登入成功
@@ -59,14 +59,13 @@ export default {
     },
     methods: {
         async signIn() {
+            this.$store.dispatch("login/logoutUser")
+            this.$store.state.login.isLogin = false;
             if (this.valid) {
-                this.$store.dispatch("login/logoutUser")
-                this.$store.state.login.isLogin = false;
                 await this.$store.dispatch("login/loginUser", {
                     username: this.username,
                     password: this.password,
                 });
-                console.log(this.$store.state.login);
                 if (this.$store.state.login.isLogin) {
                     this.loginSuccess = true;
                     this.$router.push("/edit");
@@ -79,6 +78,9 @@ export default {
         },
         signUp() {
             this.$router.push("/signup");
+        },
+        callback() {
+            console.log("callback");
         },
     },
 };
