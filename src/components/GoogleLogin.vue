@@ -11,7 +11,7 @@ import { loginByGoogle } from '@/api/OAuth'
 // const handleGoogleLogin = () => {
 const handleGoogleLogin = () => {
     googleTokenLogin({
-        clientId: "14365237599-a54jh4i11057dsf1fme2shiu501efdue.apps.googleusercontent.com"
+        clientId: process.env.GOOGLE_CLIENT_ID,
     }).then(async (response) => {
         const data = await loginByGoogle(response['access_token'])
         console.log(data)
