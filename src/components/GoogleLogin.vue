@@ -1,6 +1,6 @@
 <template>
     <v-btn type="button" @click="handleGoogleLogin">
-        使用 Google 繼續
+        使用 Google 登入
     </v-btn>
     <v-snackbar v-model="loginFailed" :timeout="2000" color="red">
         Google登入失敗，可能的問題很多zz
