@@ -9,7 +9,7 @@
 
 <script>
 import { googleTokenLogin } from 'vue3-google-login'
-import { loginByGoogle } from '@/api/OAuth'
+import { loginByGoogle } from '@/api/OAuthApi'
 import { createUser } from "@/api/userApi";
 export default {
     name: 'GoogleLogin',

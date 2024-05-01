@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  oauth:
+    build:
+      context: ./OAuth
+    ports:
+      - "5273:5273"
+
+  frontend:
+    build:
+      context: ./Frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - oauth
