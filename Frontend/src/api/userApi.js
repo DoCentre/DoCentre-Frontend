@@ -1,11 +1,12 @@
 import axios from "axios";
+import MD5 from "crypto-js/md5";
 
 export const loginUser = async function (username, password) {
+  const hashPassword = MD5(password).toString();
   let json = {
     username: username,
-    password: password,
+    password: hashPassword,
   };
-
   try {
     const response = await axios.post("/api/login", json);
     return response.data;
