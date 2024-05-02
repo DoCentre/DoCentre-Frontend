@@ -11,14 +11,14 @@
             </v-col>
             <v-layout row wrap v-for="(doc) in docs" :key="doc.id">
                 <v-col>
-                    <v-card class="mx-auto" :subtitle="doc.subtitle" :title="doc.title" hover height="200px"
+                    <v-card class="mx-auto" :title="doc.title" :subtitle="doc.status" hover height="200px"
                         @click="check(doc.id)">
                         <template v-slot:append>
-                            <v-avatar size="24">
-                                <v-img :color="doc.status"></v-img>
-                            </v-avatar>
+                            <!-- <v-avatar size="24">
+                                <v-img :color="green"></v-img>
+                            </v-avatar> -->
                         </template>
-                        <v-card-text>{{ doc.content }}</v-card-text>
+                        <v-card-text></v-card-text>
                     </v-card>
                 </v-col>
             </v-layout>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { createDoc } from "@/api/docApi";
+import { createDoc, getDocList, initDoc } from "@/api/docApi";
 import NavigationBar from "@/components/NavigationBar.vue";
 export default {
     name: "FileList",
@@ -44,6 +44,19 @@ export default {
             docs: [],
         };
     },
+    async created() {
+        const docList = await getDocList(this.$store.state.login.id);
+        if (docList.documents === null) {
+            return;
+        }
+        this.docs = docList.documents.map((doc) => {
+            return {
+                id: doc["id"],
+                title: doc["title"] || "untitled",
+                status: doc["status"],
+            };
+        });
+    },
     methods: {
         check(id) {
             this.snackbarContent = "Card " + id + " is clicked";
@@ -52,7 +65,9 @@ export default {
         async appendDoc() {
             const result = await createDoc(this.$store.state.login.id);
             const id = result["document_id"];
-            this.docs.push({ id: id, title: "Card " + id, subtitle: "This is a card " + id + " subtitle", content: "This is card " + id + " content", status: "green" });
+            const temp = await initDoc("", 0, this.$store.state.login.id, "Doc content " + id, id, "EDIT", "Doc title " + id);
+            console.log(temp);
+            this.docs.push({ id: id, title: "Doc title " + id, status: "EDIT" });
         },
     },
 };
