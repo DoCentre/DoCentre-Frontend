@@ -17,9 +17,10 @@ export const loginUser = async function (username, password) {
 };
 
 export const createUser = async function (username, password, email) {
+  const hashPassword = MD5(password).toString();
   let json = {
     username: username,
-    password: password,
+    password: hashPassword,
     email: email,
   };
 
