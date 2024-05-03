@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: "temp",
+    name: "EditDoc",
     async created() {
         console.log(this.$route.params.id)
     },
