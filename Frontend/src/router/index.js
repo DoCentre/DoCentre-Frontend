@@ -49,22 +49,6 @@ const routes = [
       title: "Approve Document",
     },
   },
-  {
-    path: "/overview",
-    name: "DocumentList",
-    component: () => import("../views/Overview.vue"),
-    meta: {
-      title: "Overview Document",
-    },
-  },
-  {
-    path: "/overview/approve",
-    name: "ApproveFileList",
-    component: () => import("../views/ApproveDoc.vue"),
-    meta: {
-      title: "Approve Document",
-    },
-  },
 ];
 
 const router = createRouter({
