@@ -6,6 +6,11 @@
                 <v-card-item class="text-h5">
                     <v-card-title>Title</v-card-title>
                     <v-row>
+                        <v-col cols="3">
+                            <v-card-text>
+                                Last Edit time: 2021-09-01 12:00:00
+                            </v-card-text>
+                        </v-col>
                         <v-col cols="2">
                             <v-card-text>
                                 Editor: SomeOne
@@ -16,14 +21,9 @@
                                 Approver: SomeOne
                             </v-card-text>
                         </v-col>
-                        <v-col cols="3">
-                            <v-card-text>
-                                Last Edit time: 2021-09-01 12:00:00
-                            </v-card-text>
-                        </v-col>
                         <v-col cols="2">
                             <v-card-text>
-                                Status
+                                Status: EDIT
                             </v-card-text>
                         </v-col>
                     </v-row>
@@ -38,36 +38,19 @@
                             <v-list-subheader>File History</v-list-subheader>
                             <v-list-item-group>
                                 <v-list-item>
-                                    <v-row>
-                                        <v-col>
-                                            2021-09-01 12:00:00
-                                        </v-col>
-                                        <v-col>
-                                            Editor: SomeOne
-                                        </v-col>
-                                        <v-col>
-                                            Approver: SomeOne
-                                        </v-col>
-                                        <v-col>
-                                            Status: Pending
-                                        </v-col>
-                                    </v-row>
+                                    <v-list-item-title>APPROVE @ 2021-09-01
+                                        12:00:00</v-list-item-title>
+                                    <v-list-item-subtitle>Comment: </v-list-item-subtitle>
                                 </v-list-item>
                                 <v-list-item>
-                                    <v-row>
-                                        <v-col>
-                                            2021-09-01 12:00:00
-                                        </v-col>
-                                        <v-col>
-                                            Editor: SomeOne
-                                        </v-col>
-                                        <v-col>
-                                            Approver: SomeOne
-                                        </v-col>
-                                        <v-col>
-                                            Status: Pending
-                                        </v-col>
-                                    </v-row>
+                                    <v-list-item-title>EDIT @ 2021-09-01
+                                        12:00:00</v-list-item-title>
+                                    <v-list-item-subtitle>Comment: </v-list-item-subtitle>
+                                </v-list-item>
+                                <v-list-item>
+                                    <v-list-item-title>CREATE @ 2021-09-01
+                                        12:00:00</v-list-item-title>
+                                    <v-list-item-subtitle>Comment: </v-list-item-subtitle>
                                 </v-list-item>
                             </v-list-item-group>
                         </v-list>
