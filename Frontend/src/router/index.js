@@ -19,16 +19,32 @@ const routes = [
   },
   {
     path: "/edit",
-    name: "EditFileList",
-    component: () => import("../views/EditDoc.vue"),
+    name: "EditDocList",
+    component: () => import("../views/EditDocList.vue"),
+    meta: {
+      title: "Edit Document List",
+    },
+  },
+  {
+    path: "/approve",
+    name: "ApproveDocList",
+    component: () => import("../views/ApproveDocList.vue"),
+    meta: {
+      title: "Approve Document List",
+    },
+  },
+  {
+    path: "/editDoc/:id",
+    name: "EditDoc",
+    component: () => import("../views/temp.vue"),
     meta: {
       title: "Edit Document",
     },
   },
   {
-    path: "/approve",
-    name: "ApproveFileList",
-    component: () => import("../views/ApproveDoc.vue"),
+    path: "/approveDoc/:id",
+    name: "ApproveDoc",
+    component: () => import("../views/temp.vue"),
     meta: {
       title: "Approve Document",
     },
