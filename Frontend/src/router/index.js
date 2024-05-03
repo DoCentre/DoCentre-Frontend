@@ -36,7 +36,7 @@ const routes = [
   {
     path: "/editDoc/:id",
     name: "EditDoc",
-    component: () => import("../views/temp.vue"),
+    component: () => import("../views/EditDoc.vue"),
     meta: {
       title: "Edit Document",
     },
@@ -44,7 +44,7 @@ const routes = [
   {
     path: "/approveDoc/:id",
     name: "ApproveDoc",
-    component: () => import("../views/temp.vue"),
+    component: () => import("../views/ApproveDoc.vue"),
     meta: {
       title: "Approve Document",
     },
