@@ -50,22 +50,6 @@ const routes = [
     },
   },
   {
-    path: "/overview",
-    name: "DocumentList",
-    component: () => import("../views/Overview.vue"),
-    meta: {
-      title: "Overview Document",
-    },
-  },
-  {
-    path: "/overview/approve",
-    name: "ApproveFileList",
-    component: () => import("../views/ApproveDoc.vue"),
-    meta: {
-      title: "Approve Document",
-    },
-  },
-  {
     path: "/admin",
     name: "AdminView",
     component: () => import("../views/AdminView.vue"),
