@@ -49,14 +49,6 @@ const routes = [
       title: "Approve Document",
     },
   },
-  {
-    path: "/admin",
-    name: "AdminView",
-    component: () => import("../views/AdminView.vue"),
-    meta: {
-      title: "Admin",
-    },
-  },
 ];
 
 const router = createRouter({
