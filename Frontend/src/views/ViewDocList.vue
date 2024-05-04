@@ -50,6 +50,9 @@ export default {
             };
         });
         this.docs.sort((a, b) => {
+            if (a.level !== b.level) {
+                return b.level - a.level;
+            }
             return new Date(b.date + " " + b.time) - new Date(a.date + " " + a.time);
         });
     },
