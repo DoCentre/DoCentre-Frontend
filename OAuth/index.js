@@ -1,4 +1,5 @@
 const express = require("express");
+const md5 = require("crypto-js/md5");
 const OAuth2Client = require("google-auth-library").OAuth2Client;
 const app = express();
 const port = 5273;
@@ -28,7 +29,13 @@ app.post("/google", async (req, res) => {
     return;
   }
 
-  res.send(userInfo);
+  let returnUserInfo = {
+    username: userInfo.name,
+    email: userInfo.email,
+    token: md5(userInfo.sub + userInfo.email).toString(),
+  };
+
+  res.send(returnUserInfo);
 });
 
 app.listen(port, () => {
