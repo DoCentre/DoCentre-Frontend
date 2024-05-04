@@ -31,7 +31,7 @@
 import { createDoc, getDocList, initDoc } from "@/api/docApi";
 import NavigationBar from "@/components/NavigationBar.vue";
 export default {
-    name: "FileList",
+    name: "EditDocList",
     components: {
         NavigationBar,
     },
