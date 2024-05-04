@@ -69,8 +69,8 @@ export default {
         async appendDoc() {
             const result = await createDoc(this.$store.state.login.id);
             const id = result["document_id"];
-            const temp = await initDoc("", 0, this.$store.state.login.id, "Doc content " + id, id, "EDIT", "Doc title " + id);
-            this.docs.push({ id: id, title: "Doc title " + id, status: "EDIT" });
+            const temp = await initDoc("", 0, this.$store.state.login.id, "", id, "EDIT", "");
+            this.$router.push("/editDoc/" + id);
         },
     },
 };
