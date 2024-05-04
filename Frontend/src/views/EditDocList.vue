@@ -59,8 +59,7 @@ export default {
     },
     methods: {
         check(id) {
-            this.snackbarContent = "Card " + id + " is clicked";
-            this.clickCard = true;
+            this.$router.push("/editDoc/" + id);
         },
         async appendDoc() {
             const result = await createDoc(this.$store.state.login.id);
