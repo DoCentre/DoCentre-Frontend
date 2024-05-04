@@ -27,24 +27,24 @@ export default {
                 this.$store.state.login.isLogin = false;
                 const data = await loginByGoogle(response['access_token'])
                 await this.$store.dispatch('login/loginUser', {
-                    username: data['name'],
-                    password: data['sub'] + data['email'],
+                    username: data['username'],
+                    password: data['token'],
                 })
                 if (this.$store.state.login.isLogin) {
                     this.loginSuccess = true;
                     this.$router.push("/edit");
                 } else {
                     const result = await createUser(
-                        data['name'],
-                        data['sub'] + data['email'],
+                        data['username'],
+                        data['token'],
                         data['email']
                     );
                     if (result == null) {
                         this.loginFailed = true;
                     } else {
                         await this.$store.dispatch('login/loginUser', {
-                            username: data['name'],
-                            password: data['sub'] + data['email'],
+                            username: data['username'],
+                            password: data['token'],
                         })
                         if (this.$store.state.login.isLogin) {
                             this.loginSuccess = true;
