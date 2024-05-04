@@ -2,13 +2,13 @@
     <NavigationBar />
     <v-container>
         <v-row>
-            <v-col cols="12">
-                <v-card hover height="200px" align="center" @click="appendDoc">
-                    <v-avatar size="200">
-                        <v-icon color="blue" size="100">mdi-plus</v-icon>
+            <v-col cols="12" align="center">
+                <v-card hover height="100px" width="300px" align="center" @click="appendDoc">
+                    <v-avatar size="100">
+                        <v-icon color="blue" size="50">mdi-plus</v-icon>
                     </v-avatar>
                 </v-card>
-            </v-col>
+            </v-col><v-progress-linear color="orange" model-value="100" rounded></v-progress-linear>
             <v-layout row wrap v-for="(doc) in docs" :key="doc.id">
                 <v-col>
                     <v-card class="mx-auto" :title="doc.title" :subtitle="doc.status" hover max-width="400"
