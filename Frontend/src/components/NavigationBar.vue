@@ -1,6 +1,7 @@
 <template>
     <v-app-bar>
         <v-toolbar-title>Hi, {{ this.$store.state.login.username }}</v-toolbar-title>
+        <v-btn v-if="this.$store.state.login.identity == 'admin'" text @click="admin">Admin</v-btn>
         <v-btn text @click="edit">Edit</v-btn>
         <v-btn text @click="approve">Approve</v-btn>
         <v-btn text @click="view">View</v-btn>
@@ -28,6 +29,9 @@ export default {
         },
         view() {
             this.$router.push("/view");
+        },
+        admin() {
+            this.$router.push("/admin");
         },
         logout() {
             this.$store.dispatch("login/logoutUser")
