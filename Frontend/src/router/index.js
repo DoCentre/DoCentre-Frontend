@@ -34,6 +34,14 @@ const routes = [
     },
   },
   {
+    path: "/view",
+    name: "ViewDocList",
+    component: () => import("../views/ViewDocList.vue"),
+    meta: {
+      title: "View Document List",
+    },
+  },
+  {
     path: "/editDoc/:id",
     name: "EditDoc",
     component: () => import("../views/EditDoc.vue"),
@@ -47,6 +55,14 @@ const routes = [
     component: () => import("../views/ApproveDoc.vue"),
     meta: {
       title: "Approve Document",
+    },
+  },
+  {
+    path: "/viewDoc/:id",
+    name: "ViewDoc",
+    component: () => import("../views/ViewDoc.vue"),
+    meta: {
+      title: "View Document",
     },
   },
   {
