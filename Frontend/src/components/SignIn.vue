@@ -5,7 +5,7 @@
         </v-card-title>
 
         <v-card-text>
-            <v-form ref="form" v-model="valid" lazy-validation>
+            <v-form ref="form" v-model="valid" lazy-validation @keyup.enter="signIn">
                 <v-text-field v-model="username" :rules="usernameRules" label="使用者名稱" required></v-text-field>
                 <v-text-field v-model="password" :rules="passwordRules" label="密碼" type="password"
                     required></v-text-field>
