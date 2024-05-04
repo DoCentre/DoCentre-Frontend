@@ -12,13 +12,11 @@
             <v-layout row wrap v-for="(doc) in docs" :key="doc.id">
                 <v-col>
                     <v-card class="mx-auto" :title="doc.title" :subtitle="doc.status" hover height="200px"
-                        @click="check(doc.id)">
-                        <template v-slot:append>
-                            <!-- <v-avatar size="24">
-                                <v-img :color="green"></v-img>
-                            </v-avatar> -->
-                        </template>
-                        <v-card-text></v-card-text>
+                        :color="doc.color" @click="check(doc.id)">
+                        <v-card-text>
+                            {{ doc.time }}<br>
+                            {{ doc.date }}
+                        </v-card-text>
                     </v-card>
                 </v-col>
             </v-layout>
@@ -53,9 +51,16 @@ export default {
             return {
                 id: doc["id"],
                 title: doc["title"] || "untitled",
+                color: doc["status"] === "EDIT" ? "gray" : doc["status"] === "VERIFY" ? "yellow" : doc["status"] === "REJECT" ? "red" : "green",
                 status: doc["status"],
+                date: new Date(new Date(doc["updated_at"]).getTime()).toLocaleDateString(),
+                time: new Date(new Date(doc["updated_at"]).getTime()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
             };
         });
+        this.docs.sort((a, b) => {
+            return new Date(b.date + " " + b.time) - new Date(a.date + " " + a.time);
+        });
+
     },
     methods: {
         check(id) {
@@ -65,7 +70,6 @@ export default {
             const result = await createDoc(this.$store.state.login.id);
             const id = result["document_id"];
             const temp = await initDoc("", 0, this.$store.state.login.id, "Doc content " + id, id, "EDIT", "Doc title " + id);
-            console.log(temp);
             this.docs.push({ id: id, title: "Doc title " + id, status: "EDIT" });
         },
     },
