@@ -22,9 +22,6 @@
             </v-layout>
         </v-row>
     </v-container>
-    <v-snackbar v-model="clickCard" :timeout="2000" color="green">
-        {{ snackbarContent }}
-    </v-snackbar>
 </template>
 
 <script>
@@ -37,7 +34,6 @@ export default {
     },
     data() {
         return {
-            snackbarContent: "",
             clickCard: false,
             docs: [],
         };
