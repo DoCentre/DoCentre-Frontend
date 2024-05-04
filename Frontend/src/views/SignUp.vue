@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="6">
+      <v-col cols="8">
         <v-img src="../assets/logo.png" max-height="100"></v-img>
         <SignUp />
       </v-col>
