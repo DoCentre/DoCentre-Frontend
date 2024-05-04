@@ -54,7 +54,7 @@ export default {
                 color: doc["status"] === "EDIT" ? "gray" : doc["status"] === "VERIFY" ? "yellow" : doc["status"] === "REJECT" ? "red" : "green",
                 status: doc["status"],
                 date: new Date(new Date(doc["updated_at"]).getTime()).toLocaleDateString(),
-                time: new Date(new Date(doc["updated_at"]).getTime()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
+                time: new Date(new Date(doc["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
             };
         });
         this.docs.sort((a, b) => {
