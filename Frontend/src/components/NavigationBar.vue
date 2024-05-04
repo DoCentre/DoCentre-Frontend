@@ -1,10 +1,9 @@
 <template>
     <v-app-bar>
-        <v-toolbar-title>File System</v-toolbar-title>
+        <v-toolbar-title>Hi, {{ this.$store.state.login.username }}</v-toolbar-title>
         <v-btn text @click="edit">Edit</v-btn>
         <v-btn text @click="approve">Approve</v-btn>
         <v-btn text @click="view">View</v-btn>
-        <h4 class="font-weight-regular text-center">Hi, {{ this.$store.state.login.username }}</h4>
         <v-btn text @click="logout">Logout</v-btn>
     </v-app-bar>
 </template>
