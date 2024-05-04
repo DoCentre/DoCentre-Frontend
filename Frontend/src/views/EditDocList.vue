@@ -11,7 +11,7 @@
             </v-col>
             <v-layout row wrap v-for="(doc) in docs" :key="doc.id">
                 <v-col>
-                    <v-card class="mx-auto" :title="doc.title" :subtitle="doc.status" hover height="200px"
+                    <v-card class="mx-auto" :title="doc.title" :subtitle="doc.status" hover max-width="400"
                         :color="doc.color" @click="check(doc.id)">
                         <v-card-text>
                             {{ doc.time }}<br>
