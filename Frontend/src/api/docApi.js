@@ -55,3 +55,17 @@ export const getDocList = async function (userID) {
     return null;
   }
 };
+
+export const getDocViewerList = async function (userID) {
+  let json = {
+    viewer_id: userID,
+  };
+
+  try {
+    const response = await axios.post("/api/documents/viewer", json);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
