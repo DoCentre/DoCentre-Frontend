@@ -41,7 +41,7 @@ export default {
     data() {
         return {
             clickCard: false,
-            color: ["green", "yellow", "gray", "red"],
+            color: ["green", "gray", "yellow", "red"],
             docs: [],
         };
     },
@@ -54,6 +54,7 @@ export default {
             return {
                 id: doc["id"],
                 title: doc["title"] || "untitled",
+                level: doc["status"] === "EDIT" ? 1 : doc["status"] === "VERIFY" ? 2 : doc["status"] === "REJECT" ? 3 : 0,
                 status: doc["status"],
                 date: new Date(new Date(doc["updated_at"]).getTime()).toLocaleDateString(),
                 time: new Date(new Date(doc["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
