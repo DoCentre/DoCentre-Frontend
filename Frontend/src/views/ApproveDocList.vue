@@ -27,7 +27,7 @@ export default {
     },
     data() {
         return {
-            color: ["green", "yellow", "gray", "red"],
+            color: ["green", "gray", "red", "yellow"],
             docs: [],
         };
     },
@@ -43,12 +43,13 @@ export default {
             return {
                 id: doc["id"],
                 title: doc["title"] || "untitled",
-                level: doc["status"] === "EDIT" ? 2 : doc["status"] === "VERIFY" ? 1 : doc["status"] === "REJECT" ? 3 : 0,
+                level: doc["status"] === "EDIT" ? 1 : doc["status"] === "VERIFY" ? 3 : doc["status"] === "REJECT" ? 2 : 0,
                 status: doc["status"],
                 date: new Date(new Date(doc["updated_at"]).getTime()).toLocaleDateString(),
                 time: new Date(new Date(doc["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
             };
         });
+        this.docs = this.docs.filter((doc) => doc.level !== 0 && doc.level !== 1);
         this.docs.sort((a, b) => {
             if (a.level !== b.level) {
                 return b.level - a.level;
