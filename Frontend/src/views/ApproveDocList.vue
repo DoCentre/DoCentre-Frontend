@@ -1,19 +1,25 @@
 <template>
     <NavigationBar />
     <v-container>
-        <v-row>
-            <v-layout row wrap v-for="(doc) in docs" :key="doc.id">
-                <v-col>
-                    <v-card class="mx-auto" :title="doc.title" :subtitle="doc.status" hover max-width="400"
-                        :color="color[doc.level]" @click="check(doc.id)">
-                        <v-card-text>
-                            {{ doc.time }}<br>
-                            {{ doc.date }}
-                        </v-card-text>
-                    </v-card>
-                </v-col>
-            </v-layout>
-        </v-row>
+        <v-layout row wrap v-for="(status) in ['VERIFY', 'REJECT']" :key="status">
+            <v-row>
+                <v-card-title>{{ status }}</v-card-title>
+                <v-progress-linear color="orange" model-value="100" rounded></v-progress-linear>
+                <v-sheet class="d-flex mb-10 flex-wrap">
+                    <v-layout row wrap v-for="(doc) in docs.filter((doc) => doc.status === status)" :key="doc.id">
+                        <v-col>
+                            <v-card class="ma-2 pa-2" :title="doc.title" :subtitle="doc.status" hover width="350"
+                                :color="color[doc.level]" @click="check(doc.id)">
+                                <v-card-text>
+                                    {{ doc.time }}<br>
+                                    {{ doc.date }}
+                                </v-card-text>
+                            </v-card>
+                        </v-col>
+                    </v-layout>
+                </v-sheet>
+            </v-row>
+        </v-layout>
     </v-container>
 </template>
 
@@ -27,7 +33,7 @@ export default {
     },
     data() {
         return {
-            color: ["green", "gray", "red", "yellow"],
+            color: ["green", "gray", "yellow", "red"],
             docs: [],
         };
     },
@@ -43,17 +49,13 @@ export default {
             return {
                 id: doc["id"],
                 title: doc["title"] || "untitled",
-                level: doc["status"] === "EDIT" ? 1 : doc["status"] === "VERIFY" ? 3 : doc["status"] === "REJECT" ? 2 : 0,
+                level: doc["status"] === "EDIT" ? 1 : doc["status"] === "VERIFY" ? 2 : doc["status"] === "REJECT" ? 3 : 0,
                 status: doc["status"],
                 date: new Date(new Date(doc["updated_at"]).getTime()).toLocaleDateString(),
                 time: new Date(new Date(doc["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
             };
         });
-        this.docs = this.docs.filter((doc) => doc.level !== 0 && doc.level !== 1);
         this.docs.sort((a, b) => {
-            if (a.level !== b.level) {
-                return b.level - a.level;
-            }
             return new Date(b.date + " " + b.time) - new Date(a.date + " " + a.time);
         });
     },
