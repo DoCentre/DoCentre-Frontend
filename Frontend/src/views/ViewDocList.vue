@@ -3,21 +3,23 @@
     <v-container>
         <v-layout row wrap v-for="(status) in ['APPROVE']" :key="status">
             <v-row>
-                <v-card-title>{{ status }}</v-card-title>
-                <v-progress-linear color="orange" model-value="100" rounded></v-progress-linear>
-                <v-sheet class="d-flex mb-10 flex-wrap">
-                    <v-layout row wrap v-for="(doc) in docs.filter((doc) => doc.status === status)" :key="doc.id">
-                        <v-col>
-                            <v-card class="ma-2 pa-2" :title="doc.title" :subtitle="doc.status" hover width="350"
-                                :color="color[doc.level]" @click="check(doc.id)">
-                                <v-card-text>
-                                    {{ doc.time }}<br>
-                                    {{ doc.date }}
-                                </v-card-text>
-                            </v-card>
-                        </v-col>
-                    </v-layout>
-                </v-sheet>
+                <v-card>
+                    <v-card-title align="center">{{ status }}</v-card-title>
+                    <v-progress-linear color="orange" model-value="100" rounded></v-progress-linear>
+                    <v-sheet class="d-flex mb-10 flex-wrap">
+                        <v-layout row wrap v-for="(doc) in docs.filter((doc) => doc.status === status)" :key="doc.id">
+                            <v-col>
+                                <v-card class="ma-2 pa-2" :title="doc.title" :subtitle="doc.status" hover width="350"
+                                    :color="color[doc.level]" @click="check(doc.id)">
+                                    <v-card-text>
+                                        {{ doc.time }}<br>
+                                        {{ doc.date }}
+                                    </v-card-text>
+                                </v-card>
+                            </v-col>
+                        </v-layout>
+                    </v-sheet>
+                </v-card>
             </v-row>
         </v-layout>
     </v-container>
