@@ -73,7 +73,7 @@ export const getDocViewerList = async function (userID) {
 export const getDocHistory = async function (docID, userID) {
   let json = {
     document_id: docID,
-    viewer_id: userID,
+    user_id: userID,
   };
 
   try {
