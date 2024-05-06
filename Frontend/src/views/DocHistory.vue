@@ -1,28 +1,23 @@
 <template>
     <NavigationBar />
     <v-container>
-        <v-col cols="12">
+        <v-col>
             <v-layout v-for="(doc) in docs" :key="doc.id">
-                <v-card class="mx-auto ma-2 pa-2" hover @click="expand(doc.id)">
+                <v-card class="mx-auto ma-2 pa-2" hover @click="expand(doc.id)" width="1200px">
                     <v-card-item class="text-h5">
                         <v-card-title>{{ doc.title }}</v-card-title>
                         <v-row>
-                            <v-col cols="3">
+                            <v-col>
                                 <v-card-text>
                                     Last Edit time: {{ doc.date }} {{ doc.time }}
                                 </v-card-text>
                             </v-col>
-                            <v-col cols="2">
-                                <v-card-text>
-                                    Editor: {{ doc.editor }}
-                                </v-card-text>
-                            </v-col>
-                            <v-col cols="2">
+                            <v-col>
                                 <v-card-text>
                                     Approver: {{ doc.approver }}
                                 </v-card-text>
                             </v-col>
-                            <v-col cols="2">
+                            <v-col>
                                 <v-card-text>
                                     Status: {{ doc.status }}
                                 </v-card-text>
