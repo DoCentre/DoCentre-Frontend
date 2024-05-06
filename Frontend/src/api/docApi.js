@@ -69,3 +69,18 @@ export const getDocViewerList = async function (userID) {
     return null;
   }
 };
+
+export const getDocHistory = async function (docID, userID) {
+  let json = {
+    document_id: docID,
+    user_id: userID,
+  };
+
+  try {
+    const response = await axios.post("/api/document/histories", json);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};

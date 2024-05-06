@@ -73,6 +73,14 @@ const routes = [
       title: "Admin",
     },
   },
+  {
+    path: "/history",
+    name: "DocHistory",
+    component: () => import("../views/DocHistory.vue"),
+    meta: {
+      title: "Document History",
+    },
+  },
 ];
 
 const router = createRouter({
