@@ -32,7 +32,7 @@
                             <v-list lines="two">
                                 <v-list-subheader>File History</v-list-subheader>
                                 <v-list-item-group>
-                                    <v-layout v-for="(history) in doc.history">
+                                    <v-layout v-for="(history) in doc.history" :key="history.id">
                                         <v-list-item>
                                             <v-list-item-title>{{ history.status }} @ {{ history.date }}
                                                 {{ history.time }}</v-list-item-title>
@@ -70,19 +70,18 @@ export default {
         for (let i = 0; i < docList.documents.length; i++) {
             const history = await getDocHistory(docList.documents[i]["id"], this.$store.state.login.id);
             let fileHistory = [];
-            if (history.histories !== null) {
-                fileHistory = history.histories.map((doc) => {
-                    return {
-                        status: doc["status"],
-                        comment: doc["comment"],
-                        date: new Date(new Date(doc["created_at"]).getTime()).toLocaleDateString(),
-                        time: new Date(new Date(doc["created_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
-                    };
-                });
-                fileHistory.sort((a, b) => {
-                    return new Date(b.date + " " + b.time) - new Date(a.date + " " + a.time);
+            for (let j = 0; j < history.histories.length; j++) {
+                fileHistory.push({
+                    id: j + 1,
+                    status: history.histories[j]["status"],
+                    comment: history.histories[j]["comment"],
+                    date: new Date(new Date(history.histories[j]["created_at"]).getTime()).toLocaleDateString(),
+                    time: new Date(new Date(history.histories[j]["created_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
                 });
             }
+            fileHistory.sort((a, b) => {
+                return new Date(b.date + " " + b.time) - new Date(a.date + " " + a.time);
+            });
             this.docs.push({
                 id: docList.documents[i]["id"],
                 editor: sessionStorage.getItem("username"),
