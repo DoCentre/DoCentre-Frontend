@@ -5,7 +5,7 @@
             <v-layout v-for="(doc) in docs" :key="doc.id">
                 <v-card class="mx-auto ma-2 pa-2" hover @click="expand(doc.id)" width="1200px">
                     <v-card-item class="text-h5">
-                        <v-card-title>{{ doc.title }}</v-card-title>
+                        <v-card-title>ID: {{ doc.id }} {{ doc.title }}</v-card-title>
                         <v-row>
                             <v-col>
                                 <v-card-text>
