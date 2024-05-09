@@ -5,7 +5,7 @@
             <v-layout v-for="(doc) in docs" :key="doc.id">
                 <v-card class="mx-auto ma-2 pa-2" hover @click="expand(doc.id)" width="1200px">
                     <v-card-item class="text-h5">
-                        <v-card-title>{{ doc.title }}</v-card-title>
+                        <v-card-title>ID: {{ doc.id }} {{ doc.title }}</v-card-title>
                         <v-row>
                             <v-col>
                                 <v-card-text>
@@ -67,34 +67,19 @@ export default {
         if (docList.documents === null) {
             return;
         }
-        for (let i = 0; i < docList.documents.length; i++) {
-            const history = await getDocHistory(docList.documents[i]["id"], this.$store.state.login.id);
-            let fileHistory = [];
-            for (let j = 0; j < history.histories.length; j++) {
-                fileHistory.push({
-                    id: j + 1,
-                    status: history.histories[j]["status"],
-                    comment: history.histories[j]["comment"],
-                    date: new Date(new Date(history.histories[j]["created_at"]).getTime()).toLocaleDateString(),
-                    time: new Date(new Date(history.histories[j]["created_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
-                });
-            }
-            fileHistory.sort((a, b) => {
-                return new Date(b.date + " " + b.time) - new Date(a.date + " " + a.time);
-            });
-            this.docs.push({
-                id: docList.documents[i]["id"],
-                editor: sessionStorage.getItem("username"),
-                approver: docList.documents[i]["approver"],
-                title: docList.documents[i]["title"] || "untitled",
-                level: docList.documents[i]["status"] === "EDIT" ? 1 : docList.documents[i]["status"] === "VERIFY" ? 2 : docList.documents[i]["status"] === "REJECT" ? 3 : 0,
-                status: docList.documents[i]["status"],
-                date: new Date(new Date(docList.documents[i]["updated_at"]).getTime()).toLocaleDateString(),
-                time: new Date(new Date(docList.documents[i]["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
-                history: fileHistory,
+        this.docs = docList.documents.map((doc) => {
+            return {
+                id: doc["id"],
+                approver: doc["approver"],
+                title: doc["title"] || "untitled",
+                level: doc["status"] === "EDIT" ? 1 : doc["status"] === "VERIFY" ? 2 : doc["status"] === "REJECT" ? 3 : 0,
+                status: doc["status"],
+                date: new Date(new Date(doc["updated_at"]).getTime()).toLocaleDateString(),
+                time: new Date(new Date(doc["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
+                history: [],
                 expand: false,
-            });
-        }
+            };
+        });
         this.docs.sort((a, b) => {
             return new Date(b.date + " " + b.time) - new Date(a.date + " " + a.time);
         });
@@ -103,6 +88,20 @@ export default {
         expand(id) {
             this.docs = this.docs.map((doc) => {
                 if (doc.id === id) {
+                    const filehistory = getDocHistory(id, this.$store.state.login.id);
+                    filehistory.then((res) => {
+                        if (res.histories !== null) {
+                            doc.history = res.histories.map((history) => {
+                                return {
+                                    id: history["id"],
+                                    status: history["status"],
+                                    date: new Date(new Date(history["updated_at"]).getTime()).toLocaleDateString(),
+                                    time: new Date(new Date(history["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
+                                    comment: history["comment"],
+                                };
+                            });
+                        }
+                    });
                     doc.expand = !doc.expand;
                 } else {
                     doc.expand = false;
