@@ -53,7 +53,7 @@
 import { getDocList, getDocHistory } from "@/api/docApi";
 import NavigationBar from "@/components/NavigationBar.vue";
 export default {
-    name: "AdminView",
+    name: "DocHistory",
     components: {
         NavigationBar,
     },
@@ -67,41 +67,49 @@ export default {
         if (docList.documents === null) {
             return;
         }
-        this.docs = docList.documents.map((doc) => {
-            return {
-                id: doc["id"],
-                approver: doc["approver"],
-                title: doc["title"] || "untitled",
-                level: doc["status"] === "EDIT" ? 1 : doc["status"] === "VERIFY" ? 2 : doc["status"] === "REJECT" ? 3 : 0,
-                status: doc["status"],
-                date: new Date(new Date(doc["updated_at"]).getTime()).toLocaleDateString(),
-                time: new Date(new Date(doc["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
-                history: [],
-                expand: false,
-            };
-        });
-        this.docs.sort((a, b) => {
-            return new Date(b.date + " " + b.time) - new Date(a.date + " " + a.time);
-        });
+        try {
+            this.docs = docList.documents.map((doc) => {
+                return {
+                    id: doc["id"],
+                    approver: doc["approver"],
+                    title: doc["title"] || "untitled",
+                    level: doc["status"] === "EDIT" ? 1 : doc["status"] === "VERIFY" ? 2 : doc["status"] === "REJECT" ? 3 : 0,
+                    status: doc["status"],
+                    date: new Date(new Date(doc["updated_at"]).getTime()).toLocaleDateString(),
+                    time: new Date(new Date(doc["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
+                    history: [],
+                    expand: false,
+                };
+            });
+            this.docs.sort((a, b) => {
+                return new Date(b.date + " " + b.time) - new Date(a.date + " " + a.time);
+            });
+        } catch (err) {
+            console.log(err);
+        }
     },
     methods: {
         expand(id) {
             this.docs = this.docs.map((doc) => {
                 if (doc.id === id) {
-                    const filehistory = getDocHistory(id, this.$store.state.login.id);
-                    filehistory.then((res) => {
-                        if (res.histories !== null) {
-                            doc.history = res.histories.map((history) => {
-                                return {
-                                    id: history["id"],
-                                    status: history["status"],
-                                    date: new Date(new Date(history["updated_at"]).getTime()).toLocaleDateString(),
-                                    time: new Date(new Date(history["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
-                                    comment: history["comment"],
-                                };
-                            });
-                        }
-                    });
+                    try {
+                        const filehistory = getDocHistory(id, this.$store.state.login.id);
+                        filehistory.then((res) => {
+                            if (res.histories !== null) {
+                                doc.history = res.histories.map((history) => {
+                                    return {
+                                        id: history["id"],
+                                        status: history["status"],
+                                        date: new Date(new Date(history["updated_at"]).getTime()).toLocaleDateString(),
+                                        time: new Date(new Date(history["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
+                                        comment: history["comment"],
+                                    };
+                                });
+                            }
+                        });
+                    } catch (error) {
+                        console.log(error);
+                    }
                     doc.expand = !doc.expand;
                 } else {
                     doc.expand = false;
