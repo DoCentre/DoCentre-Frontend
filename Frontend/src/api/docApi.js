@@ -9,7 +9,11 @@ export const createDoc = async function (userID) {
     const response = await axios.post("/api/document", json);
     return response.data;
   } catch (err) {
-    console.log(err);
+    console.log(
+      "createDoc API Error",
+      err["response"]["status"],
+      err["response"]["data"]["msg"]
+    );
     return null;
   }
 };
@@ -37,7 +41,11 @@ export const initDoc = async function (
     const response = await axios.put("/api/document/update", json);
     return response.data;
   } catch (err) {
-    console.log(err);
+    console.log(
+      "initDoc API Error",
+      err["response"]["status"],
+      err["response"]["data"]["msg"]
+    );
     return null;
   }
 };
@@ -51,7 +59,11 @@ export const getDocList = async function (userID) {
     const response = await axios.post("/api/documents/author", json);
     return response.data;
   } catch (err) {
-    console.log(err);
+    console.log(
+      "getDocList API Error",
+      err["response"]["status"],
+      err["response"]["data"]["msg"]
+    );
     return null;
   }
 };
@@ -65,7 +77,11 @@ export const getDocViewerList = async function (userID) {
     const response = await axios.post("/api/documents/viewer", json);
     return response.data;
   } catch (err) {
-    console.log(err);
+    console.log(
+      "getDocViewerList API Error",
+      err["response"]["status"],
+      err["response"]["data"]["msg"]
+    );
     return null;
   }
 };
@@ -80,7 +96,11 @@ export const getDocHistory = async function (docID, userID) {
     const response = await axios.post("/api/document/histories", json);
     return response.data;
   } catch (err) {
-    console.log(err);
+    console.log(
+      "getDocHistory API Error",
+      err["response"]["status"],
+      err["response"]["data"]["msg"]
+    );
     return null;
   }
 };
