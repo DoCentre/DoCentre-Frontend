@@ -45,19 +45,23 @@ export default {
         if (docList.documents === null) {
             return;
         }
-        this.docs = docList.documents.map((doc) => {
-            return {
-                id: doc["id"],
-                title: doc["title"] || "untitled",
-                level: doc["status"] === "EDIT" ? 1 : doc["status"] === "VERIFY" ? 2 : doc["status"] === "REJECT" ? 3 : 0,
-                status: doc["status"],
-                date: new Date(new Date(doc["updated_at"]).getTime()).toLocaleDateString(),
-                time: new Date(new Date(doc["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
-            };
-        });
-        this.docs.sort((a, b) => {
-            return new Date(b.date + " " + b.time) - new Date(a.date + " " + a.time);
-        });
+        try {
+            this.docs = docList.documents.map((doc) => {
+                return {
+                    id: doc["id"],
+                    title: doc["title"] || "untitled",
+                    level: doc["status"] === "EDIT" ? 1 : doc["status"] === "VERIFY" ? 2 : doc["status"] === "REJECT" ? 3 : 0,
+                    status: doc["status"],
+                    date: new Date(new Date(doc["updated_at"]).getTime()).toLocaleDateString(),
+                    time: new Date(new Date(doc["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
+                };
+            });
+            this.docs.sort((a, b) => {
+                return new Date(b.date + " " + b.time) - new Date(a.date + " " + a.time);
+            });
+        } catch (err) {
+            console.log(err);
+        }
     },
     methods: {
         check(id) {
