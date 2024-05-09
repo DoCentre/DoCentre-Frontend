@@ -88,20 +88,24 @@ export default {
         expand(id) {
             this.docs = this.docs.map((doc) => {
                 if (doc.id === id) {
-                    const filehistory = getDocHistory(id, this.$store.state.login.id);
-                    filehistory.then((res) => {
-                        if (res.histories !== null) {
-                            doc.history = res.histories.map((history) => {
-                                return {
-                                    id: history["id"],
-                                    status: history["status"],
-                                    date: new Date(new Date(history["updated_at"]).getTime()).toLocaleDateString(),
-                                    time: new Date(new Date(history["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
-                                    comment: history["comment"],
-                                };
-                            });
-                        }
-                    });
+                    try {
+                        const filehistory = getDocHistory(id, this.$store.state.login.id);
+                        filehistory.then((res) => {
+                            if (res.histories !== null) {
+                                doc.history = res.histories.map((history) => {
+                                    return {
+                                        id: history["id"],
+                                        status: history["status"],
+                                        date: new Date(new Date(history["updated_at"]).getTime()).toLocaleDateString(),
+                                        time: new Date(new Date(history["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
+                                        comment: history["comment"],
+                                    };
+                                });
+                            }
+                        });
+                    } catch (error) {
+                        console.log(error);
+                    }
                     doc.expand = !doc.expand;
                 } else {
                     doc.expand = false;

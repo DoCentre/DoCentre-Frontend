@@ -50,19 +50,23 @@ export default {
         if (docList.documents === null) {
             return;
         }
-        this.docs = docList.documents.map((doc) => {
-            return {
-                id: doc["id"],
-                title: doc["title"] || "untitled",
-                level: doc["status"] === "EDIT" ? 1 : doc["status"] === "VERIFY" ? 2 : doc["status"] === "REJECT" ? 3 : 0,
-                status: doc["status"],
-                date: new Date(new Date(doc["updated_at"]).getTime()).toLocaleDateString(),
-                time: new Date(new Date(doc["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
-            };
-        });
-        this.docs.sort((a, b) => {
-            return new Date(b.date + " " + b.time) - new Date(a.date + " " + a.time);
-        });
+        try {
+            this.docs = docList.documents.map((doc) => {
+                return {
+                    id: doc["id"],
+                    title: doc["title"] || "untitled",
+                    level: doc["status"] === "EDIT" ? 1 : doc["status"] === "VERIFY" ? 2 : doc["status"] === "REJECT" ? 3 : 0,
+                    status: doc["status"],
+                    date: new Date(new Date(doc["updated_at"]).getTime()).toLocaleDateString(),
+                    time: new Date(new Date(doc["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
+                };
+            });
+            this.docs.sort((a, b) => {
+                return new Date(b.date + " " + b.time) - new Date(a.date + " " + a.time);
+            });
+        } catch (err) {
+            console.log(err);
+        }
 
     },
     methods: {
@@ -70,10 +74,14 @@ export default {
             this.$router.push("/editDoc/" + id);
         },
         async appendDoc() {
-            const result = await createDoc(this.$store.state.login.id);
-            const id = result["document_id"];
-            await initDoc("", 0, this.$store.state.login.id, "", id, "EDIT", "");
-            this.$router.push("/editDoc/" + id);
+            try {
+                const result = await createDoc(this.$store.state.login.id);
+                const id = result["document_id"];
+                await initDoc("", 0, this.$store.state.login.id, "", id, "EDIT", "");
+                this.$router.push("/editDoc/" + id);
+            } catch (err) {
+                console.log(err);
+            }
         },
     },
 };
