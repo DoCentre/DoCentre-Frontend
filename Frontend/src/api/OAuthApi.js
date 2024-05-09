@@ -8,7 +8,11 @@ export const loginByGoogle = async (authCode) => {
     const response = await axios.post("/oauth/google", json);
     return response.data;
   } catch (err) {
-    console.log(err);
+    console.log(
+      "loginByGoogle API Error",
+      err["response"]["status"],
+      err["response"]["data"]["msg"]
+    );
     return null;
   }
 };
