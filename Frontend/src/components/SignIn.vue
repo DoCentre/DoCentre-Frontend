@@ -54,21 +54,25 @@ export default {
     },
     methods: {
         async signIn() {
-            this.$store.dispatch("login/logoutUser")
-            this.$store.state.login.isLogin = false;
-            if (this.valid) {
-                await this.$store.dispatch("login/loginUser", {
-                    username: this.username,
-                    password: this.password,
-                });
-                if (this.$store.state.login.isLogin) {
-                    this.loginSuccess = true;
-                    this.$router.push("/edit");
+            try {
+                this.$store.dispatch("login/logoutUser")
+                this.$store.state.login.isLogin = false;
+                if (this.valid) {
+                    await this.$store.dispatch("login/loginUser", {
+                        username: this.username,
+                        password: this.password,
+                    });
+                    if (this.$store.state.login.isLogin) {
+                        this.loginSuccess = true;
+                        this.$router.push("/edit");
+                    } else {
+                        this.loginFailed = true;
+                    }
                 } else {
                     this.loginFailed = true;
                 }
-            } else {
-                this.loginFailed = true;
+            } catch (err) {
+                console.log(err)
             }
         },
         signUp() {
