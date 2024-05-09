@@ -7,6 +7,7 @@
   
         <v-card-text>
           <v-textarea
+            v-model="Title"
             solo
             flat
             auto-grow
@@ -34,6 +35,7 @@
 
             <v-card-text>
                 <v-text-field
+                    v-model="Content"
                     :loading="loading"
                     density="compact"
                     label="comment"
@@ -55,11 +57,22 @@
   
 
 <script>
+import { getDocHistory } from '@/api/docApi';
+
 export default{
     name: "ApproveComponent",
-//   components: {
-//     PopEdit,
-//   },
+    data: () => {
+        return {
+           Title: "",
+           Content: "",
+        };
+    },
+    async created() {
+      const result = await getDocHistory(this.$route.params.id, this.$store.state.login.id); // docID, userId
+      this.Title = result
+    },
+
+    
     
 };
 </script>
