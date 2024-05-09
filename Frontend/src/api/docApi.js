@@ -29,7 +29,7 @@ export const initDoc = async function (
     author_id: authorID,
     content: content,
     document_id: documentID,
-    status: status,
+    status: status, // edit, verify, approve, reject
     title: title,
   };
 
