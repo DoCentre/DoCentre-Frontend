@@ -1,4 +1,6 @@
 const HOST = process.env.VUE_APP_HOST || "localhost";
+const API_HOST = process.env.VUE_APP_API_HOST || "localhost";
+const OAUTH_HOST = process.env.VUE_APP_OAUTH_HOST || "localhost";
 
 module.exports = {
   transpileDependencies: ["vuetify"],
@@ -8,14 +10,14 @@ module.exports = {
     allowedHosts: [HOST],
     proxy: {
       "/api": {
-        target: "http://" + HOST + ":8080",
+        target: "http://" + OAUTH_HOST + ":8080",
         changeOrigin: true,
         pathRewrite: {
           "^/api": "",
         },
       },
       "/oauth": {
-        target: "http://" + HOST + ":5273",
+        target: "http://" + API_HOST + ":5273",
         changeOrigin: true,
         pathRewrite: {
           "^/oauth": "",
