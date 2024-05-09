@@ -57,20 +57,24 @@ export default {
     },
     methods: {
         async signUp() {
-            if (this.valid) {
-                const result = await createUser(
-                    this.username,
-                    this.password,
-                    this.email
-                );
+            try {
+                if (this.valid) {
+                    const result = await createUser(
+                        this.username,
+                        this.password,
+                        this.email
+                    );
 
-                if (result == null) {
-                    this.isOpenSnackbar = true;
+                    if (result == null) {
+                        this.isOpenSnackbar = true;
+                    } else {
+                        this.$router.push("/");
+                    }
                 } else {
-                    this.$router.push("/");
+                    this.isOpenSnackbar = true;
                 }
-            } else {
-                this.isOpenSnackbar = true;
+            } catch (err) {
+                console.log(err);
             }
         },
         backToLogin() {
