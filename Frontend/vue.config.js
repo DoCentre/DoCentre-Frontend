@@ -10,14 +10,14 @@ module.exports = {
     allowedHosts: [HOST],
     proxy: {
       "/api": {
-        target: "http://" + OAUTH_HOST + ":8080",
+        target: "http://" + API_HOST + ":8080",
         changeOrigin: true,
         pathRewrite: {
           "^/api": "",
         },
       },
       "/oauth": {
-        target: "http://" + API_HOST + ":5273",
+        target: "http://" + OAUTH_HOST + ":5273",
         changeOrigin: true,
         pathRewrite: {
           "^/oauth": "",
