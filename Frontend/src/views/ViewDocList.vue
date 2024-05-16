@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { getDocViewerList } from "@/api/docApi";
+import { getDocVerifyList } from "@/api/docApi";
 import NavigationBar from "@/components/NavigationBar.vue";
 export default {
     name: "ViewDocList",
@@ -38,7 +38,7 @@ export default {
         };
     },
     async created() {
-        const docList = await getDocViewerList(this.$store.state.login.id);
+        const docList = await getDocVerifyList(this.$store.state.login.id);
         if (docList === null) {
             return;
         }

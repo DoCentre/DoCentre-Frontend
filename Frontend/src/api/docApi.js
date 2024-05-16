@@ -68,13 +68,33 @@ export const getDocList = async function (userID) {
   }
 };
 
-export const getDocViewerList = async function (userID) {
+export const getDocVerifyList = async function (userID) {
   let json = {
-    viewer_id: userID,
+    user_id: userID,
   };
 
   try {
-    const response = await axios.post("/api/documents/viewer", json);
+    const response = await axios.post("/api/documents/verify", json);
+    return response.data;
+  } catch (err) {
+    console.log(
+      "getDocViewerList API Error",
+      err["response"]["status"],
+      err["response"]["data"]["msg"]
+    );
+    return null;
+  }
+};
+
+export const getDocApproverList = async function (userID) {
+  let json = {
+    approver_id: userID,
+  };
+
+  try {
+    const response = await axios.post("/api/documents/approver", json);
+    console.log(json);
+    console.log(response)
     return response.data;
   } catch (err) {
     console.log(
@@ -94,6 +114,25 @@ export const getDocHistory = async function (docID, userID) {
 
   try {
     const response = await axios.post("/api/document/histories", json);
+    return response.data;
+  } catch (err) {
+    console.log(
+      "getDocHistory API Error",
+      err["response"]["status"],
+      err["response"]["data"]["msg"]
+    );
+    return null;
+  }
+};
+
+export const getDocContent = async function (userID, docID) {
+  let json = {
+    user_id: userID,
+    document_id: docID,
+  };
+
+  try {
+    const response = await axios.post("/api/document/content", json);
     return response.data;
   } catch (err) {
     console.log(

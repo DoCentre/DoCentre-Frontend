@@ -12,15 +12,15 @@
 
 
 <script>
-// import { useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 export default {
     name: "NavigationBar",
-    // setup() {
-    //     if (sessionStorage.getItem("username") == null) {
-    //         const router = useRouter();
-    //         router.push("/");
-    //     }
-    // },
+    setup() {
+        if (sessionStorage.getItem("username") == null) {
+            const router = useRouter();
+            router.push("/");
+        }
+    },
     methods: {
         edit() {
             this.$router.push("/edit");

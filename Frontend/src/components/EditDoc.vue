@@ -27,7 +27,10 @@
           <v-chip color="grey lighten-2" class="ma-2">
             Approver: Mike
           </v-chip>
-          <v-btn @click="update" :disabled="checkForm" color="green" dark>
+          <v-btn @click="save" :disabled="checkForm" color="grey" dark>
+            Save
+          </v-btn>
+          <v-btn @click="submit" :disabled="checkForm" color="green" dark>
             Submit
           </v-btn>
         </v-card-actions>
@@ -65,14 +68,21 @@ export default{
         }
     },
     methods: {
-        async update() {
+        async submit() {
           try {
-            console.log(this.$store.state.login.id + " " + this.$route.params.id);
-            await updateDoc(this.$store.state.login.id, this.$route.params.id, "hhh", "asdf", "", 0, "EDIT");
-            // this.$router.push("/edit");
+            await updateDoc(parseInt(this.$store.state.login.id), parseInt(this.$route.params.id), this.Title, this.Content, "", 3, "APPROVE");
+            this.$router.push("/edit");
           } catch (err) {
             this.isOpenSnackbar = true;
-            console.log("error");
+            console.log(err);
+          }
+        },
+        async save(){
+          try {
+            await updateDoc(parseInt(this.$store.state.login.id), parseInt(this.$route.params.id), this.Title, this.Content, "", 3, "EDIT");
+            this.$router.push("/edit");
+          } catch (err) {
+            this.isOpenSnackbar = true;
             console.log(err);
           }
         },
