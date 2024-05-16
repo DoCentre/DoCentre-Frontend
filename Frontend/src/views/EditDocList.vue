@@ -77,7 +77,8 @@ export default {
             try {
                 const result = await createDoc(this.$store.state.login.id);
                 const id = result["document_id"];
-                await initDoc("", 0, this.$store.state.login.id, "", id, "EDIT", "");
+                // await initDoc("", 0, this.$store.state.login.id, "This is ", id, "EDIT", "");
+                await initDoc("", 0, this.$store.state.login.id, " ", id, "EDIT", " ");
                 this.$router.push("/editDoc/" + id);
             } catch (err) {
                 console.log(err);
