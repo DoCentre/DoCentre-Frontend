@@ -13,7 +13,7 @@
             auto-grow
             readonly
             rows="17"
-            value="The report delves into the multifaceted effects of climate change, highlighting rising greenhouse gas emissions, temperature shifts, and extreme weather events. It emphasizes the urgent need for mitigation and adaptation strategies, underscoring the disproportionate impact on vulnerable populations and advocating for international cooperation to address this pressing global challenge."
+            value="The report deles into the multifaceted effects of climate change, highlighting rising greenhouse gas emissions, temperature shifts, and extreme weather events. It emphasizes the urgent need for mitigation and adaptation strategies, underscoring the disproportionate impact on vulnerable populations and advocating for international cooperation to address this pressing global challenge."
           ></v-textarea>
         </v-card-text>
   
@@ -71,6 +71,14 @@ export default{
       const result = await getDocHistory(this.$route.params.id, this.$store.state.login.id); // docID, userId
       this.Title = result
     },
+    methods:{
+      approve(){
+        
+      },
+      disapprove(){
+        
+      },
+    }
 
     
     
