@@ -22,30 +22,32 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-chip color="grey lighten-2" class="ma-2">
-            Last Edit: 3/10
+            Last Edit: 
           </v-chip>
           <v-chip color="grey lighten-2" class="ma-2">
             Approver: Mike
           </v-chip>
-          <v-btn color="green" dark>
+          <v-btn @click="update" :disabled="checkForm" color="green" dark>
             Submit
           </v-btn>
         </v-card-actions>
       </v-card>
+
+      <v-snackbar v-model="isOpenSnackbar" :timeout="2000" color="red">
+          無法儲存
+      </v-snackbar>
     </v-container>
   </template>
 
 <script>
-import { initDoc } from '@/api/docApi';
-
-// import initDoc from "@/api/docApi.vue"
+import { updateDoc } from '@/api/docApi';
 export default{
     name: "EditComponent",
-    data: () => {
+    data () {
         return {
+            isOpenSnackbar: false,
             submitSuccess: false, 
             submitFailed: false,
-            valid: false, 
             Title: "",
             Content: "",
 
@@ -56,22 +58,24 @@ export default{
                 (v) => !!v || "欄位不可留空",
             ],
         };
-        // this.$route.params.id
+    },
+    computed: {
+        checkForm(){
+          return !this.Title;
+        }
     },
     methods: {
-        checkForm() {
-          return !this.valid;
-        },
-        async updateDoc() {
-          if(!this.valid) {
-            console.log("Invalid Input!");
-            return;
+        async update() {
+          try {
+            console.log(this.$store.state.login.id + " " + this.$route.params.id);
+            await updateDoc(this.$store.state.login.id, this.$route.params.id, "hhh", "asdf", "", 0, "EDIT");
+            // this.$router.push("/edit");
+          } catch (err) {
+            this.isOpenSnackbar = true;
+            console.log("error");
+            console.log(err);
           }
-          await initDoc("", 0, this.$store.state.login.id, this.Content, this.$route.params.id, "EDIT", this.Title); // To be change
-          this.$router.push("/edit");
-        }
-
+        },
     },
-    
 };
 </script>

@@ -18,23 +18,23 @@ export const createDoc = async function (userID) {
   }
 };
 
-export const initDoc = async function (
+export const updateDoc = async function (
+  authorID,
+  documentID,
+  title,
+  content,
   appendix,
   approverID,
-  authorID,
-  content,
-  documentID,
   status,
-  title
 ) {
   let json = {
+    author_id: authorID,
+    document_id: documentID,
+    title: title,
+    content: content,
     appendix: appendix,
     approver_id: approverID,
-    author_id: authorID,
-    content: content,
-    document_id: documentID,
     status: status, // edit, verify, approve, reject
-    title: title,
   };
 
   try {

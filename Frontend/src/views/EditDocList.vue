@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { createDoc, getDocList, initDoc } from "@/api/docApi";
+import { createDoc, getDocList, updateDoc } from "@/api/docApi";
 import NavigationBar from "@/components/NavigationBar.vue";
 export default {
     name: "EditDocList",
@@ -77,8 +77,7 @@ export default {
             try {
                 const result = await createDoc(this.$store.state.login.id);
                 const id = result["document_id"];
-                // await initDoc("", 0, this.$store.state.login.id, "This is ", id, "EDIT", "");
-                await initDoc("", 0, this.$store.state.login.id, " ", id, "EDIT", " ");
+                await updateDoc(this.$store.state.login.id, id, "hhh", "hhh", "", 0, "EDIT");
                 this.$router.push("/editDoc/" + id);
             } catch (err) {
                 console.log(err);

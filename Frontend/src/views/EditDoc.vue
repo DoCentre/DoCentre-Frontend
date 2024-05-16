@@ -15,7 +15,7 @@ export default {
         EditComponent,
     },
     async created() {
-        console.log(this.$route.params.id)
+        // console.log(this.$route.params.id)
     },
 };
 </script>
