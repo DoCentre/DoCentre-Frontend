@@ -22,11 +22,8 @@
           <v-chip color="grey lighten-2" class="ma-2">
             Last Edit: 3/10
           </v-chip>
-          <v-chip color="grey lighten-2" class="ma-2">
-            Approver: Mike
-          </v-chip>
           <v-btn color="green" dark>
-            Submit
+            Approve
           </v-btn>
         </v-card-actions>
 
@@ -57,19 +54,22 @@
   
 
 <script>
-import { getDocHistory } from '@/api/docApi';
+import { getDocContent } from '@/api/docApi';
 
 export default{
     name: "ApproveComponent",
-    data: () => {
+    data () {
         return {
            Title: "",
            Content: "",
         };
     },
-    async created() {
-      const result = await getDocHistory(this.$route.params.id, this.$store.state.login.id); // docID, userId
-      this.Title = result
+    async created(){
+      const result = await getDocContent(parseInt(this.$store.state.login.id), parseInt(this.$route.params.id)); // docID, userId
+      console.log("hi");
+      console.log(result);
+      this.Title = result["document"]["Title"];
+      this.Content = result["document"]["Content"];
     },
     methods:{
       approve(){
