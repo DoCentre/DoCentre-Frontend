@@ -22,11 +22,17 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-chip color="grey lighten-2" class="ma-2">
-            Last Edit: 
+            Last Edit: {{ this.lastUpdate }}
           </v-chip>
-          <v-chip color="grey lighten-2" class="ma-2">
-            Approver: Mike
-          </v-chip>
+
+          <v-select
+            v-model="selectedApprover"
+            :items="approverList"
+            density="compact"
+            label="Approver"
+            style="max-width: 170px"
+          ></v-select>
+
           <v-btn @click="save" :disabled="checkForm" color="grey" dark>
             Save
           </v-btn>
@@ -43,7 +49,8 @@
   </template>
 
 <script>
-import { updateDoc } from '@/api/docApi';
+import { updateDoc, getDocContent } from '@/api/docApi';
+
 export default{
     name: "EditComponent",
     data () {
@@ -51,8 +58,17 @@ export default{
             isOpenSnackbar: false,
             submitSuccess: false, 
             submitFailed: false,
+            approverList: [
+              { index: 0, title: "0" },
+              { index: 1, title: "1" },
+              { index: 2, title: "2" },
+              { index: 3, title: "3" },
+              { index: 4, title: "4" },
+            ],
             Title: "",
             Content: "",
+            selectedApprover: 0,
+            lastUpdate: "",
 
             titleRules:[
                 (v) => !!v || "欄位不可留空",
@@ -62,15 +78,37 @@ export default{
             ],
         };
     },
+    // mounted: function(){
+    //   this.getItems().then(data => {
+    //     this.Title = data.find((obj) => ResizeObserver.index === "Title")["Title"];
+    //   })
+    // },
+    async created(){
+      const result = await getDocContent(parseInt(this.$store.state.login.id), parseInt(this.$route.params.id)); // docID, userId
+      // var d = $.Deferred();
+      // setTimeout(function(){
+      //   var values = [
+      //     {index: "Title", value: result["document"]["Title"]},
+      //     {index: "Content", value: result["document"]["Content"]},
+      //     {index: "selectedApprover", value: result["document"]["ApproverID"]},
+      //     {index: "lastUpdate", value: result["document"]["UpdatedAt"]},
+      //   ];
+      //   d.resolve(values);
+      // }, 2000);
+      this.Title = result["document"]["Title"];
+      this.Content = result["document"]["Content"];
+      this.selectedApprover = result["document"]["ApproverID"]
+      this.lastUpdate = result["document"]["UpdatedAt"].substring(0,10)
+    },  
     computed: {
         checkForm(){
           return !this.Title;
-        }
+        },
     },
     methods: {
         async submit() {
           try {
-            await updateDoc(parseInt(this.$store.state.login.id), parseInt(this.$route.params.id), this.Title, this.Content, "", 3, "APPROVE");
+            await updateDoc(parseInt(this.$store.state.login.id), parseInt(this.$route.params.id), this.Title, this.Content, "", this.selectedApprover, "APPROVE");
             this.$router.push("/edit");
           } catch (err) {
             this.isOpenSnackbar = true;
@@ -79,7 +117,7 @@ export default{
         },
         async save(){
           try {
-            await updateDoc(parseInt(this.$store.state.login.id), parseInt(this.$route.params.id), this.Title, this.Content, "", 3, "EDIT");
+            await updateDoc(parseInt(this.$store.state.login.id), parseInt(this.$route.params.id), this.Title, this.Content, "", this.Approver, "EDIT");
             this.$router.push("/edit");
           } catch (err) {
             this.isOpenSnackbar = true;

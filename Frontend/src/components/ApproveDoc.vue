@@ -66,8 +66,6 @@ export default{
     },
     async created(){
       const result = await getDocContent(parseInt(this.$store.state.login.id), parseInt(this.$route.params.id)); // docID, userId
-      console.log("hi");
-      console.log(result);
       this.Title = result["document"]["Title"];
       this.Content = result["document"]["Content"];
     },
