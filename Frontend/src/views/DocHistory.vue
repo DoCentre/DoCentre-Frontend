@@ -3,7 +3,7 @@
     <v-container>
         <v-col>
             <v-layout v-for="(doc) in docs" :key="doc.id">
-                <v-card class="mx-auto ma-2 pa-2" hover @click="expand(doc.id)" width="1200px">
+                <v-card class="mx-auto ma-2 pa-2" hover @click="click(doc.id, 1)" width="1200px">
                     <v-card-item class="text-h5">
                         <v-card-title>ID: {{ doc.id }} {{ doc.title }}</v-card-title>
                         <v-row>
@@ -24,7 +24,7 @@
                             </v-col>
                         </v-row>
                         <template v-slot:append>
-                            <v-btn color="primary" text="Edit" variant="text" @click="test"></v-btn>
+                            <v-btn color="primary" text="Edit" variant="text" @click="click(doc.id, 2)"></v-btn>
                         </template>
                     </v-card-item>
                     <v-expand-transition>
@@ -89,36 +89,37 @@ export default {
         }
     },
     methods: {
-        expand(id) {
-            this.docs = this.docs.map((doc) => {
-                if (doc.id === id) {
-                    try {
-                        const filehistory = getDocHistory(id, this.$store.state.login.id);
-                        filehistory.then((res) => {
-                            if (res.histories !== null) {
-                                doc.history = res.histories.map((history) => {
-                                    return {
-                                        id: history["id"],
-                                        status: history["status"],
-                                        date: new Date(new Date(history["updated_at"]).getTime()).toLocaleDateString(),
-                                        time: new Date(new Date(history["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
-                                        comment: history["comment"],
-                                    };
-                                });
-                            }
-                        });
-                    } catch (error) {
-                        console.log(error);
+        click(id, type) {
+            if (type == 1) {
+                this.docs = this.docs.map((doc) => {
+                    if (doc.id === id) {
+                        try {
+                            const filehistory = getDocHistory(id, this.$store.state.login.id);
+                            filehistory.then((res) => {
+                                if (res.histories !== null) {
+                                    doc.history = res.histories.map((history) => {
+                                        return {
+                                            id: history["id"],
+                                            status: history["status"],
+                                            date: new Date(new Date(history["updated_at"]).getTime()).toLocaleDateString(),
+                                            time: new Date(new Date(history["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
+                                            comment: history["comment"],
+                                        };
+                                    });
+                                }
+                            });
+                        } catch (error) {
+                            console.log(error);
+                        }
+                        doc.expand = !doc.expand;
+                    } else {
+                        doc.expand = false;
                     }
-                    doc.expand = !doc.expand;
-                } else {
-                    doc.expand = false;
-                }
-                return doc;
-            });
-        },
-        async test() {
-            console.log("test");
+                    return doc;
+                })
+            } else if (type == 2) {
+                this.$router.push({ name: "EditDoc", params: { id: id } });
+            }
         },
     },
 };
