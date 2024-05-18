@@ -3,8 +3,6 @@ import { loginUser } from "../../api/userApi";
 const blankUserData = {
   id: null,
   username: "",
-  identity: "",
-  email: "",
   isLogin: false,
 };
 
@@ -29,12 +27,14 @@ const actions = {
     if (userData !== null) {
       localStorage.setItem("id", userData.user.id);
       localStorage.setItem("username", userData.user.username);
+      localStorage.setItem("isLogin", true);
       commit("updateUserData", userData.user);
     }
   },
   logoutUser({ commit }) {
     localStorage.removeItem("id");
     localStorage.removeItem("username");
+    localStorage.removeItem("isLogin");
     commit("updateUserData", blankUserData);
   },
 };
@@ -43,8 +43,6 @@ const mutations = {
   updateUserData(state, userData) {
     state.id = userData.id;
     state.username = userData.username;
-    state.identity = userData.identity;
-    state.email = userData.email;
     state.isLogin = true;
   },
 };
