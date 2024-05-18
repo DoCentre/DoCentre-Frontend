@@ -68,17 +68,17 @@ export const getDocList = async function (userID) {
   }
 };
 
-export const getDocViewerList = async function (userID) {
+export const getDocVerifyList = async function (userID) {
   let json = {
-    viewer_id: userID,
+    user_id: userID,
   };
 
   try {
-    const response = await axios.post("/api/documents/viewer", json);
+    const response = await axios.post("/api/documents/verify", json);
     return response.data;
   } catch (err) {
     console.log(
-      "getDocViewerList API Error",
+      "getDocVerifyList API Error",
       err["response"]["status"],
       err["response"]["data"]["msg"]
     );
@@ -96,7 +96,7 @@ export const getDocApproverList = async function (userID) {
     return response.data;
   } catch (err) {
     console.log(
-      "getDocViewerList API Error",
+      "getDocApproverList API Error",
       err["response"]["status"],
       err["response"]["data"]["msg"]
     );
