@@ -21,10 +21,13 @@
             </v-col>
         </v-layout>
     </v-container>
+    <v-snackbar v-model="noApproveFile" :timeout="2000" color="red">
+        沒有檔案需要審核
+    </v-snackbar>
 </template>
 
 <script>
-import { getDocViewerList } from "@/api/docApi";
+import { getDocApproverList } from "@/api/docApi";
 import NavigationBar from "@/components/NavigationBar.vue";
 export default {
     name: "ApproveDocList",
@@ -33,16 +36,18 @@ export default {
     },
     data() {
         return {
+            noApproveFile: false,
             color: ["green", "gray", "yellow", "red"],
             docs: [],
         };
     },
     async created() {
-        const docList = await getDocViewerList(this.$store.state.login.id);
+        const docList = await getDocApproverList(this.$store.state.login.id);
         if (docList === null) {
             return;
         }
         if (docList.documents === null) {
+
             return;
         }
         try {
