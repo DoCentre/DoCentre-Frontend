@@ -43,7 +43,6 @@ export default {
     },
     async created() {
         const docList = await getDocVerifyList(this.$store.state.login.id);
-        console.log(docList);
         if (docList === null) {
             return;
         }

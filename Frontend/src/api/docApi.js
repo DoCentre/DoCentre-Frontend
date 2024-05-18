@@ -50,6 +50,32 @@ export const updateDoc = async function (
   }
 };
 
+export const updateDocStatus = async function (
+  approver_id,
+  comment,
+  document_id,
+  status,
+) {
+  let json = {
+    approver_id: approver_id,
+    comment: comment,
+    document_id: document_id,
+    status: status, // edit, verify, approve, reject
+  };
+
+  try {
+    const response = await axios.put("/api/document/update/status", json);
+    return response.data;
+  } catch (err) {
+    console.log(
+      "initDoc API Error",
+      err["response"]["status"],
+      err["response"]["data"]["msg"]
+    );
+    return null;
+  }
+};
+
 export const getDocList = async function (userID) {
   let json = {
     author_id: userID,
@@ -112,6 +138,25 @@ export const getDocHistory = async function (docID, userID) {
 
   try {
     const response = await axios.post("/api/document/histories", json);
+    return response.data;
+  } catch (err) {
+    console.log(
+      "getDocHistory API Error",
+      err["response"]["status"],
+      err["response"]["data"]["msg"]
+    );
+    return null;
+  }
+};
+
+export const getDocContent = async function (userID, docID) {
+  let json = {
+    user_id: userID,
+    document_id: docID,
+  };
+
+  try {
+    const response = await axios.post("/api/document/content", json);
     return response.data;
   } catch (err) {
     console.log(

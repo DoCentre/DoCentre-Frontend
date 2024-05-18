@@ -15,7 +15,7 @@ export default {
         ApproveComponent,
     },
     async created() {
-        console.log(this.$route.params.id)
+        // console.log(this.$route.params.id)
     },
 };
 </script>
