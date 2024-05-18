@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { useRouter } from "vue-router";
 export default {
     name: "SignIn",
     data: () => {
@@ -52,11 +53,16 @@ export default {
             return !this.valid;
         },
     },
+    setup() {
+        if (localStorage.getItem("isLogin") != null) {
+            const router = useRouter();
+            router.push("/edit");
+        }
+    },
     methods: {
         async signIn() {
             try {
                 this.$store.dispatch("login/logoutUser")
-                this.$store.state.login.isLogin = false;
                 if (this.valid) {
                     await this.$store.dispatch("login/loginUser", {
                         username: this.username,
