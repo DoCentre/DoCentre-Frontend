@@ -1,7 +1,7 @@
 <template>
     <NavigationBar />
     <v-container>
-        <v-layout v-for="(status) in ['VERIFY', 'REJECT', 'APPROVE']" :key="status">
+        <v-layout v-for="(status) in ['APPROVE', 'REJECT']" :key="status">
             <v-col v-if="docs.filter((doc) => doc.status === status).length > 0">
                 <v-card-title align="center">{{ status }}</v-card-title>
                 <hr style="height:5px;border-width:0;color:orange;background-color:orange">
@@ -21,6 +21,9 @@
             </v-col>
         </v-layout>
     </v-container>
+    <v-snackbar v-model="noApproveFile" :timeout="2000" color="red">
+        沒有檔案需要審核
+    </v-snackbar>
 </template>
 
 <script>
@@ -33,17 +36,18 @@ export default {
     },
     data() {
         return {
+            noApproveFile: false,
             color: ["green", "gray", "yellow", "red"],
             docs: [],
         };
     },
     async created() {
         const docList = await getDocApproverList(this.$store.state.login.id);
-        console.log(docList)
         if (docList === null) {
             return;
         }
         if (docList.documents === null) {
+            this.noApproveFile = true;
             return;
         }
         try {
@@ -51,7 +55,7 @@ export default {
                 return {
                     id: doc["id"],
                     title: doc["title"] || "untitled",
-                    level: doc["status"] === "EDIT" ? 1 : doc["status"] === "VERIFY" ? 2 : doc["status"] === "REJECT" ? 3 : 0,
+                    level: doc["status"] === "EDIT" ? 1 : doc["status"] === "VERIFY" ? 0 : doc["status"] === "REJECT" ? 3 : 2,
                     status: doc["status"],
                     date: new Date(new Date(doc["updated_at"]).getTime()).toLocaleDateString(),
                     time: new Date(new Date(doc["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),

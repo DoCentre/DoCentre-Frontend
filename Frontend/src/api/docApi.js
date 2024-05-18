@@ -25,7 +25,7 @@ export const updateDoc = async function (
   content,
   appendix,
   approverID,
-  status,
+  status
 ) {
   let json = {
     author_id: authorID,
@@ -104,7 +104,7 @@ export const getDocVerifyList = async function (userID) {
     return response.data;
   } catch (err) {
     console.log(
-      "getDocViewerList API Error",
+      "getDocVerifyList API Error",
       err["response"]["status"],
       err["response"]["data"]["msg"]
     );
@@ -119,12 +119,10 @@ export const getDocApproverList = async function (userID) {
 
   try {
     const response = await axios.post("/api/documents/approver", json);
-    console.log(json);
-    console.log(response)
     return response.data;
   } catch (err) {
     console.log(
-      "getDocViewerList API Error",
+      "getDocApproverList API Error",
       err["response"]["status"],
       err["response"]["data"]["msg"]
     );
