@@ -9,12 +9,12 @@ const blankUserData = {
 };
 
 const getDefaultState = () => {
-  return sessionStorage.getItem("username")
+  return localStorage.getItem("username")
     ? {
-        id: parseInt(sessionStorage.getItem("id")),
-        username: sessionStorage.getItem("username"),
-        identity: sessionStorage.getItem("identity"),
-        email: sessionStorage.getItem("email"),
+        id: parseInt(localStorage.getItem("id")),
+        username: localStorage.getItem("username"),
+        identity: localStorage.getItem("identity"),
+        email: localStorage.getItem("email"),
         isLogin: true,
       }
     : blankUserData;
@@ -29,18 +29,18 @@ const actions = {
     const userData = await loginUser(loginData.username, loginData.password);
 
     if (userData !== null) {
-      sessionStorage.setItem("id", userData.user.id);
-      sessionStorage.setItem("username", userData.user.username);
-      sessionStorage.setItem("identity", userData.user.identity);
-      sessionStorage.setItem("email", userData.user.email);
+      localStorage.setItem("id", userData.user.id);
+      localStorage.setItem("username", userData.user.username);
+      localStorage.setItem("identity", userData.user.identity);
+      localStorage.setItem("email", userData.user.email);
       commit("updateUserData", userData.user);
     }
   },
   logoutUser({ commit }) {
-    sessionStorage.removeItem("id");
-    sessionStorage.removeItem("username");
-    sessionStorage.removeItem("identity");
-    sessionStorage.removeItem("email");
+    localStorage.removeItem("id");
+    localStorage.removeItem("username");
+    localStorage.removeItem("identity");
+    localStorage.removeItem("email");
     commit("updateUserData", blankUserData);
   },
 };
