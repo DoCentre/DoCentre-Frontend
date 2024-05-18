@@ -16,7 +16,7 @@ import { useRouter } from "vue-router";
 export default {
     name: "NavigationBar",
     setup() {
-        if (sessionStorage.getItem("username") == null) {
+        if (localStorage.getItem("username") == null) {
             const router = useRouter();
             router.push("/");
         }
