@@ -1,7 +1,7 @@
 <template>
     <NavigationBar />
     <v-container>
-        <v-layout v-for="(status) in ['VERIFY', 'REJECT']" :key="status">
+        <v-layout v-for="(status) in ['VERIFY', 'REJECT', 'APPROVE']" :key="status">
             <v-col v-if="docs.filter((doc) => doc.status === status).length > 0">
                 <v-card-title align="center">{{ status }}</v-card-title>
                 <hr style="height:5px;border-width:0;color:orange;background-color:orange">

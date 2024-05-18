@@ -13,7 +13,6 @@
             <v-textarea
                 v-model="Content"
                 label="Content"
-                counter
                 single-line
                 rows="15"
             ></v-textarea>
@@ -43,7 +42,7 @@
       </v-card>
 
       <v-snackbar v-model="isOpenSnackbar" :timeout="2000" color="red">
-          無法儲存
+          儲存失敗
       </v-snackbar>
     </v-container>
   </template>
@@ -85,16 +84,6 @@ export default{
     // },
     async created(){
       const result = await getDocContent(parseInt(this.$store.state.login.id), parseInt(this.$route.params.id)); // docID, userId
-      // var d = $.Deferred();
-      // setTimeout(function(){
-      //   var values = [
-      //     {index: "Title", value: result["document"]["Title"]},
-      //     {index: "Content", value: result["document"]["Content"]},
-      //     {index: "selectedApprover", value: result["document"]["ApproverID"]},
-      //     {index: "lastUpdate", value: result["document"]["UpdatedAt"]},
-      //   ];
-      //   d.resolve(values);
-      // }, 2000);
       this.Title = result["document"]["Title"];
       this.Content = result["document"]["Content"];
       this.selectedApprover = result["document"]["ApproverID"]
@@ -109,7 +98,7 @@ export default{
         async submit() {
           try {
             await updateDoc(parseInt(this.$store.state.login.id), parseInt(this.$route.params.id), this.Title, this.Content, "", this.selectedApprover, "APPROVE");
-            this.$router.push("/edit");
+            // this.$router.push("/edit");
           } catch (err) {
             this.isOpenSnackbar = true;
             console.log(err);
@@ -117,7 +106,7 @@ export default{
         },
         async save(){
           try {
-            await updateDoc(parseInt(this.$store.state.login.id), parseInt(this.$route.params.id), this.Title, this.Content, "", this.Approver, "EDIT");
+            await updateDoc(parseInt(this.$store.state.login.id), parseInt(this.$route.params.id), this.Title, this.Content, "", this.selectedApprover, "EDIT");
             this.$router.push("/edit");
           } catch (err) {
             this.isOpenSnackbar = true;
