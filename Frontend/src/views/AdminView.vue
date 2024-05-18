@@ -14,11 +14,6 @@
                             </v-col>
                             <v-col>
                                 <v-card-text>
-                                    Approver: {{ doc.approver }}
-                                </v-card-text>
-                            </v-col>
-                            <v-col>
-                                <v-card-text>
                                     Status: {{ doc.status }}
                                 </v-card-text>
                             </v-col>
@@ -71,7 +66,6 @@ export default {
         this.docs = docList.documents.map((doc) => {
             return {
                 id: doc["id"],
-                approver: doc["approver"],
                 title: doc["title"] || "untitled",
                 level: doc["status"] === "EDIT" ? 1 : doc["status"] === "VERIFY" ? 2 : doc["status"] === "REJECT" ? 3 : 0,
                 status: doc["status"],
