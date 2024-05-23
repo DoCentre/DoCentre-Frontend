@@ -65,7 +65,7 @@ export default {
                 data: data,
             });
         }
-        console.log(this.metrics);
+        // console.log(this.metrics);
     },
 };
 </script>
