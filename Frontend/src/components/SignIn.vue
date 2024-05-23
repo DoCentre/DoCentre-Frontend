@@ -63,6 +63,7 @@ export default {
         async signIn() {
             try {
                 this.$store.dispatch("login/logoutUser")
+                this.$store.state.login.isLogin = false
                 if (this.valid) {
                     await this.$store.dispatch("login/loginUser", {
                         username: this.username,
