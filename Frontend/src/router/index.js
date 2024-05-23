@@ -81,6 +81,14 @@ const routes = [
       title: "Document History",
     },
   },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    component: () => import("../views/showMetrics.vue"),
+    meta: {
+      title: "Dashboard",
+    },
+  },
 ];
 
 const router = createRouter({
