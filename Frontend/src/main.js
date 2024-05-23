@@ -9,7 +9,7 @@ import axios from "axios";
 const HOST = process.env.VUE_APP_HOST || "localhost";
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = "http://" + HOST + ":5173/";
+axios.defaults.baseURL = "http://" + HOST;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 loadFonts();
