@@ -8,7 +8,7 @@
                 </v-avatar>
             </v-card>
         </v-col>
-        <v-layout v-for="(status) in ['REJECT', 'EDIT', 'VERIFY', 'APPROVE']" :key="status">
+        <v-layout v-for="(status) in ['REJECT', 'EDIT']" :key="status">
             <v-col v-if="docs.filter((doc) => doc.status === status).length > 0">
                 <v-card-title align="center">{{ status }}</v-card-title>
                 <hr style="height:5px;border-width:0;color:orange;background-color:orange">
