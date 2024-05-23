@@ -1,12 +1,30 @@
 <template>
     <v-app-bar>
         <v-toolbar-title>Hi, {{ this.$store.state.login.username }}</v-toolbar-title>
-        <v-btn v-if="this.$store.state.login.identity == 'admin'" text @click="admin">Admin</v-btn>
-        <v-btn text @click="history">history</v-btn>
-        <v-btn text @click="edit">Edit</v-btn>
-        <v-btn text @click="approve">Approve</v-btn>
-        <v-btn text @click="view">View</v-btn>
-        <v-btn text @click="logout">Logout</v-btn>
+        <div id="computer">
+            <v-btn v-if="this.$store.state.login.identity == 'admin'" text @click="admin">Admin</v-btn>
+            <v-btn text @click="history">History</v-btn>
+            <v-btn text @click="edit">Edit</v-btn>
+            <v-btn text @click="approve">Approve</v-btn>
+            <v-btn text @click="view">View</v-btn>
+            <v-btn text @click="logout">Logout</v-btn>
+        </div>
+        <div id="mobile">
+            <v-menu>
+                <template v-slot:activator="{ props }">
+                    <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
+                </template>
+                <v-list>
+                    <v-list-item v-if="this.$store.state.login.identity == 'admin'" text
+                        @click="admin">Admin</v-list-item>
+                    <v-list-item @click="history">History</v-list-item>
+                    <v-list-item @click="edit">Edit</v-list-item>
+                    <v-list-item @click="approve">Approve</v-list-item>
+                    <v-list-item @click="view">View</v-list-item>
+                    <v-list-item @click="logout">Logout</v-list-item>
+                </v-list>
+            </v-menu>
+        </div>
     </v-app-bar>
 </template>
 
@@ -45,3 +63,23 @@ export default {
     },
 };
 </script>
+
+<style>
+#computer {
+    display: block;
+}
+
+#mobile {
+    display: none;
+}
+
+@media (max-width: 700px) {
+    #computer {
+        display: none;
+    }
+
+    #mobile {
+        display: block;
+    }
+}
+</style>
