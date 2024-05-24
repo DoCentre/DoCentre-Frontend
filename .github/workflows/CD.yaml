@@ -1,0 +1,28 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.TOKEN_FOR_DOCKER }}" | docker login ghcr.io -u au2a --password-stdin
+
+      - name: Build and push frontend image
+        working-directory: ./frontend
+        run: |-
+          docker build -t ghcr.io/docentre/docentre-frontend .
+          docker push ghcr.io/docentre/docentre-frontend
+
+      - name: Build and push OAuth image
+        working-directory: ./OAuth
+        run: |-
+          docker build -t ghcr.io/docentre/docentre-oauth .
+          docker push ghcr.io/docentre/docentre-oauth
