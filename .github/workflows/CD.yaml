@@ -16,7 +16,7 @@ jobs:
         run: echo "${{ secrets.TOKEN_FOR_DOCKER }}" | docker login ghcr.io -u au2a --password-stdin
 
       - name: Build and push frontend image
-        working-directory: ./frontend
+        working-directory: ./Frontend
         run: |-
           docker build -t ghcr.io/docentre/docentre-frontend .
           docker push ghcr.io/docentre/docentre-frontend
