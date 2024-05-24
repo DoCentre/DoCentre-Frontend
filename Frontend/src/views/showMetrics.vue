@@ -64,6 +64,11 @@ export default {
     components: {
         NavigationBar,
     },
+    mounted: function () {
+        this.interval = setInterval(() => {
+            this.loadMetrics();
+        }, 10000)
+    },
     data() {
         return {
             showDetail: false,
@@ -75,36 +80,47 @@ export default {
             http200: 0,
             http500: 0,
             http503: 0,
+            interval: null,
         };
     },
     async created() {
-        const log = await getMetrics();
-        const metricstemp = log.split("# HELP ");
-        for (let i = 1; i < metricstemp.length; i++) {
-            let api = metricstemp[i].split("\n")[0].split(" ")[0];
-            let info = metricstemp[i].split("\n")[0].split(api + " ")[1];
-            let type = metricstemp[i].split("\n")[1].split(api + " ")[1];
-            let data = [];
-            for (let j = 2; j < metricstemp[i].split("\n").length - 1; j++) {
-                let apiData = metricstemp[i].split("\n")[j].split(" ")[0];
-                let apiValue = metricstemp[i].split("\n")[j].split(apiData + " ")[1];
-                data.push([apiData, apiValue]);
+        await this.loadMetrics();
+    },
+    methods: {
+        async loadMetrics() {
+            try {
+                const log = await getMetrics();
+                const metricstemp = log.split("# HELP ");
+                this.metrics = [];
+                for (let i = 1; i < metricstemp.length; i++) {
+                    let api = metricstemp[i].split("\n")[0].split(" ")[0];
+                    let info = metricstemp[i].split("\n")[0].split(api + " ")[1];
+                    let type = metricstemp[i].split("\n")[1].split(api + " ")[1];
+                    let data = [];
+                    for (let j = 2; j < metricstemp[i].split("\n").length - 1; j++) {
+                        let apiData = metricstemp[i].split("\n")[j].split(" ")[0];
+                        let apiValue = metricstemp[i].split("\n")[j].split(apiData + " ")[1];
+                        data.push([apiData, apiValue]);
+                    }
+                    this.metrics.push({
+                        api: api,
+                        info: info,
+                        type: type,
+                        data: data,
+                    });
+                }
+                this.memory = Number(this.metrics[30]["data"][0][1]) / 1024 / 1024;
+                this.memoryPercent = String(this.memory / 10) + "%";
+                this.http200 = Number(this.metrics[35]["data"][0][1]);
+                this.http500 = Number(this.metrics[35]["data"][1][1]);
+                this.http503 = Number(this.metrics[35]["data"][2][1]);
+                this.processTime = Number(this.metrics[27]["data"][0][1]) / (this.http200 + this.http500 + this.http503);
+                this.processTimePercent = String(this.processTime * 100) + "%";
+                console.log(this.memory);
+            } catch (error) {
+                console.log(error);
             }
-            this.metrics.push({
-                api: api,
-                info: info,
-                type: type,
-                data: data,
-            });
-        }
-        this.memory = Number(this.metrics[30]["data"][0][1]) / 1024 / 1024;
-        this.memoryPercent = String(this.memory / 10) + "%";
-        this.http200 = Number(this.metrics[35]["data"][0][1]);
-        this.http500 = Number(this.metrics[35]["data"][1][1]);
-        this.http503 = Number(this.metrics[35]["data"][2][1]);
-        this.processTime = Number(this.metrics[27]["data"][0][1]) / (this.http200 + this.http500 + this.http503);
-        this.processTimePercent = String(this.processTime * 100) + "%";
-        console.log(this.metrics);
+        },
     },
 };
 </script>
