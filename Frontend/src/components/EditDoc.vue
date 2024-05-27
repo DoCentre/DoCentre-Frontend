@@ -79,7 +79,7 @@ export default {
     // console.log(result)
     this.Title = result["document"]["Title"];
     this.Content = result["document"]["Content"];
-    this.selectedApprover = "";
+    this.selectedApprover = this.approverList[result["document"]["Approver"]["ID"]].title;
     this.lastUpdate = result["document"]["UpdatedAt"].substring(0, 10)
     this.data = result["document"]["Appendix"]
     if (this.data === "") {
