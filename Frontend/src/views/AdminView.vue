@@ -92,8 +92,8 @@ export default {
                                         return {
                                             id: history["id"],
                                             status: history["status"],
-                                            date: new Date(new Date(history["updated_at"]).getTime()).toLocaleDateString(),
-                                            time: new Date(new Date(history["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
+                                            date: new Date(new Date(history["created_at"]).getTime()).toLocaleDateString(),
+                                            time: new Date(new Date(history["created_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
                                             comment: history["comment"],
                                         };
                                     });
