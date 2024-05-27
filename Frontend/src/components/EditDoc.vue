@@ -77,16 +77,16 @@ export default{
             submitSuccess: false, 
             submitFailed: false,
             approverList: [
-              { index: 0, title: "0" },
-              { index: 1, title: "1" },
-              { index: 2, title: "2" },
-              { index: 3, title: "3" },
-              { index: 4, title: "4" },
-              { index: 5, title: "5" },
-              { index: 6, title: "6" },
-              { index: 7, title: "7" },
-              { index: 8, title: "8" },
-              { index: 9, title: "9" },
+              { index: 0, title: "aura" },
+              { index: 1, title: "laiyt" },
+              { index: 2, title: "hhf" },
+              { index: 3, title: "yuhsuan" },
+              { index: 4, title: "johnny" },
+              { index: 5, title: "mike" },
+              { index: 6, title: "tim" },
+              { index: 7, title: "alex" },
+              { index: 8, title: "michael" },
+              { index: 9, title: "eve" },
             ],
             Title: "",
             Content: "",
@@ -108,7 +108,7 @@ export default{
       // console.log(result)
       this.Title = result["document"]["Title"];
       this.Content = result["document"]["Content"];
-      this.selectedApprover = result["document"]["ApproverID"]
+      this.selectedApprover = "";
       this.lastUpdate = result["document"]["UpdatedAt"].substring(0,10)
       this.data = result["document"]["Appendix"]
       if(this.data === ""){
@@ -126,8 +126,15 @@ export default{
           return new Promise(resolve => setTimeout(resolve, time));
         },
         async submit() {
+          let approverIndex = 0;
+          this.approverList.forEach((element) => {
+            if (element.title === this.selectedApprover) {
+              approverIndex = element.index;
+            }
+          });
+          console.log(approverIndex);
           try {
-            await updateDoc(parseInt(this.$store.state.login.id), parseInt(this.$route.params.id), this.Title, this.Content, this.data, this.selectedApprover, "APPROVE");
+            await updateDoc(parseInt(this.$store.state.login.id), parseInt(this.$route.params.id), this.Title, this.Content, this.data, approverIndex, "APPROVE");
             this.$router.push("/edit");
           } catch (err) {
             this.isOpenSnackbar = true;
