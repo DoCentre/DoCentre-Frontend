@@ -19,7 +19,9 @@
                             </v-col>
                         </v-row>
                         <template v-slot:append>
-                            <v-btn color="primary" text="Edit" variant="text" @click="click(doc.id, 2)"></v-btn>
+                            <div v-if="doc.level != 0">
+                                <v-btn color="primary" text="Edit" variant="text" @click="click(doc.id, 2)"></v-btn>
+                            </div>
                         </template>
                     </v-card-item>
                     <v-expand-transition>
