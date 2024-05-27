@@ -103,7 +103,6 @@ export default {
           approverIndex = element.index;
         }
       });
-      console.log(approverIndex);
       try {
         await updateDoc(parseInt(this.$store.state.login.id), parseInt(this.$route.params.id), this.Title, this.Content, this.data, approverIndex, "APPROVE");
         this.$router.push("/edit");
@@ -113,8 +112,14 @@ export default {
       }
     },
     async save() {
+      let approverIndex = -1;
+      this.approverList.forEach((element) => {
+        if (element.title === this.selectedApprover) {
+          approverIndex = element.index;
+        }
+      });
       try {
-        await updateDoc(parseInt(this.$store.state.login.id), parseInt(this.$route.params.id), this.Title, this.Content, this.data, this.selectedApprover, "EDIT");
+        await updateDoc(parseInt(this.$store.state.login.id), parseInt(this.$route.params.id), this.Title, this.Content, this.data, approverIndex, "EDIT");
         this.$router.push("/edit");
       } catch (err) {
         this.isOpenSnackbar = true;
