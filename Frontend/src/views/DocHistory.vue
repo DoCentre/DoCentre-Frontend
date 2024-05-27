@@ -72,8 +72,8 @@ export default {
                     title: doc["title"] || "untitled",
                     level: doc["status"] === "EDIT" ? 1 : doc["status"] === "VERIFY" ? 2 : doc["status"] === "REJECT" ? 3 : 0,
                     status: doc["status"],
-                    date: new Date(new Date(doc["created_at"]).getTime()).toLocaleDateString(),
-                    time: new Date(new Date(doc["created_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
+                    date: new Date(new Date(doc["updated_at"]).getTime()).toLocaleDateString(),
+                    time: new Date(new Date(doc["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
                     history: [],
                     expand: false,
                 };
@@ -98,8 +98,8 @@ export default {
                                         return {
                                             id: history["id"],
                                             status: history["status"],
-                                            date: new Date(new Date(history["updated_at"]).getTime()).toLocaleDateString(),
-                                            time: new Date(new Date(history["updated_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
+                                            date: new Date(new Date(history["created_at"]).getTime()).toLocaleDateString(),
+                                            time: new Date(new Date(history["created_at"]).getTime()).toLocaleTimeString([], { hour12: false }),
                                             comment: history["comment"],
                                         };
                                     });
