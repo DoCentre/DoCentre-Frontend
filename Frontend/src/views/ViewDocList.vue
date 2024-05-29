@@ -70,7 +70,7 @@ export default {
     },
     methods: {
         check(id) {
-            this.$router.push("/approveDoc/" + id);
+            this.$router.push("/viewDoc/" + id);
         },
     },
 };
