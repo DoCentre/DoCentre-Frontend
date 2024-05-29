@@ -76,10 +76,10 @@ export default {
   },
   async created() {
     const result = await getDocContent(parseInt(this.$store.state.login.id), parseInt(this.$route.params.id)); // docID, userId
-    // console.log(result)
+    console.log(result)
     this.Title = result["document"]["Title"];
     this.Content = result["document"]["Content"];
-    this.selectedApprover = this.approverList[result["document"]["Approver"]["ID"]].title;
+    this.selectedApprover = this.approverList[result["document"]["ApproverID"] - 1].title;
     this.lastUpdate = result["document"]["UpdatedAt"].substring(0, 10)
     this.data = result["document"]["Appendix"]
     if (this.data === "") {
