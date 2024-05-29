@@ -1,21 +1,21 @@
 <template>
     <NavigationBar />
     <v-container>
-        <!-- <ApproveComponent /> -->
+        <ViewComponent />
     </v-container>
 </template>
 
 <script>
 import NavigationBar from "@/components/NavigationBar.vue"
-// import ApproveComponent from "@/components/ApproveDoc.vue"
+import ViewComponent from "@/components/ViewDoc.vue"
 export default {
     name: "ViewDoc",
     components: {
         NavigationBar,
-        // ApproveComponent,
+        ViewComponent,
     },
     async created() {
-        console.log(this.$route.params.id)
+        // console.log(this.$route.params.id)
     },
 };
 </script>
