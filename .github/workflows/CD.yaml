@@ -26,3 +26,24 @@ jobs:
         run: |-
           docker build -t ghcr.io/docentre/docentre-oauth .
           docker push ghcr.io/docentre/docentre-oauth
+
+      - name: Load kubeconfig
+        run: |-
+          mkdir ~/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode >> ~/.kube/config
+
+      - name: Load k8s files
+        run: |-
+          mkdir k8s
+          echo "${{ secrets.KUBE_FILE }}" | base64 --decode >> k8s/k8s.yaml
+
+      - name: Stop old k8s
+        working-directory: ./k8s
+        run: |-
+          kubectl delete -f .
+
+      - name: Start k8s
+        if: always()
+        working-directory: ./k8s
+        run: |-
+          kubectl apply -f .
