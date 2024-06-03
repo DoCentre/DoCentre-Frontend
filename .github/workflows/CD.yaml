@@ -28,6 +28,7 @@ jobs:
           docker push ghcr.io/docentre/docentre-oauth
 
   Kubernetes:
+    needs: Docker
     runs-on: ubuntu-latest
     steps:
       - name: Load kubeconfig
