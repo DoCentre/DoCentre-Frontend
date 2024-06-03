@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  Deploy:
+  Docker:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -27,6 +27,9 @@ jobs:
           docker build -t ghcr.io/docentre/docentre-oauth .
           docker push ghcr.io/docentre/docentre-oauth
 
+  Kubernetes:
+    runs-on: ubuntu-latest
+    steps:
       - name: Load kubeconfig
         run: |-
           mkdir ~/.kube
