@@ -70,7 +70,7 @@ export default {
   },
   async created() {
     const result = await getDocContent(parseInt(this.$store.state.login.id), parseInt(this.$route.params.id)); // docID, userId
-    // console.log(result);
+    console.log(result);
     const user = await getUser();
     for (let i = 0; i < user["users"].length; i++) {
       this.approverList.push({ index: user["users"][i]["id"], title: user["users"][i]["username"] });
@@ -80,7 +80,7 @@ export default {
     this.lastUpdate = result["document"]["UpdatedAt"].substring(0, 10);
     this.approverList.forEach((element) => {
       if (element.index === result["document"]["AuthorID"]) {
-        this.selectedApprover = element.title;
+        this.Author = element.title;
       }
     });
     this.data = result["document"]["Appendix"]
