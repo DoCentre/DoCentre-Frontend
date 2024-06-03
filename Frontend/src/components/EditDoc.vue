@@ -39,6 +39,7 @@
 
 <script>
 import { updateDoc, getDocContent } from '@/api/docApi';
+import { getUser } from '@/api/userApi';
 
 export default {
   name: "EditComponent",
@@ -47,22 +48,10 @@ export default {
       isOpenSnackbar: false,
       submitSuccess: false,
       submitFailed: false,
-      approverList: [
-        { index: 0, title: "" },
-        { index: 1, title: "aura" },
-        { index: 2, title: "laiyt" },
-        { index: 3, title: "hhf" },
-        { index: 4, title: "yuhsuan" },
-        { index: 5, title: "johnny" },
-        { index: 6, title: "mike" },
-        { index: 7, title: "tim" },
-        { index: 8, title: "alex" },
-        { index: 9, title: "michael" },
-        { index: 10, title: "eve" },
-      ],
+      approverList: [],
       Title: "",
       Content: "",
-      selectedApprover: 0,
+      selectedApprover: "",
       lastUpdate: "",
       chosenFile: "",
       data: "",
@@ -77,10 +66,20 @@ export default {
   },
   async created() {
     const result = await getDocContent(parseInt(this.$store.state.login.id), parseInt(this.$route.params.id)); // docID, userId
-    console.log(result)
+    // console.log(result)
+    const user = await getUser();
+    for (let i = 0; i < user["users"].length; i++) {
+      if (result["document"]["AuthorID"] !== user["users"][i]["id"]) {
+        this.approverList.push({ index: user["users"][i]["id"], title: user["users"][i]["username"] });
+      }
+    }
     this.Title = result["document"]["Title"];
     this.Content = result["document"]["Content"];
-    this.selectedApprover = this.approverList[result["document"]["ApproverID"]].title;
+    this.approverList.forEach((element) => {
+      if (element.index === result["document"]["ApproverID"]) {
+        this.selectedApprover = element.title;
+      }
+    });
     this.lastUpdate = result["document"]["UpdatedAt"].substring(0, 10)
     this.data = result["document"]["Appendix"]
     if (this.data === "") {
