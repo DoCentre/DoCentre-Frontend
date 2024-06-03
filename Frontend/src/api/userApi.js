@@ -40,3 +40,17 @@ export const createUser = async function (username, password, email) {
     return null;
   }
 };
+
+export const getUser = async function () {
+  try {
+    const response = await axios.get("/api/users");
+    return response.data;
+  } catch (err) {
+    console.log(
+      "getUser API Error",
+      err["response"]["status"],
+      err["response"]["data"]["msg"]
+    );
+    return null;
+  }
+};
