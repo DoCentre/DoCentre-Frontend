@@ -22,7 +22,7 @@
         <v-select v-model="selectedApprover" :items="approverList" density="compact" label="Approver"
           style="max-width: 170px"></v-select>
 
-        <v-btn @click="save" :disabled="checkForm" color="grey" dark>
+        <v-btn @click="save" :disabled="checkForm" color="blue" dark>
           Save
         </v-btn>
         <v-btn @click="submit" :disabled="checkForm" color="green" dark>
