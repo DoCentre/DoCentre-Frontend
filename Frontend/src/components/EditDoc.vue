@@ -48,6 +48,7 @@ export default {
       submitSuccess: false,
       submitFailed: false,
       approverList: [
+        { index: 0, title: "" },
         { index: 1, title: "aura" },
         { index: 2, title: "laiyt" },
         { index: 3, title: "hhf" },
