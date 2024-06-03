@@ -95,7 +95,7 @@ export default {
   methods: {
     async approve() {
       try {
-        await updateDocStatus(parseInt(this.$store.state.login.id), "", parseInt(this.$route.params.id), "APPROVE");
+        await updateDocStatus(parseInt(this.$store.state.login.id), "", parseInt(this.$route.params.id), "VERIFY");
         this.$router.push("/approve");
       } catch (err) {
         this.isOpenSnackbar = true;
