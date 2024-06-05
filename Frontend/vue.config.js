@@ -8,12 +8,6 @@ module.exports = {
   devServer: {
     port: 5173,
     allowedHosts: [HOST],
-    client: {
-      overlay: {
-        warnings: false,
-        errors: false,
-      },
-    },
     proxy: {
       "/api": {
         target: "http://" + API_HOST + ":8080",
